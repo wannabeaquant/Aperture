@@ -1,0 +1,15 @@
+[Unit]
+Description=Aperture OpenClaw Gateway
+After=network.target
+
+[Service]
+User=aperture
+WorkingDirectory=/srv/aperture
+ExecStart=/usr/bin/openclaw gateway --port 18789 --verbose
+Restart=always
+RestartSec=5
+Environment=OPENCLAW_CONFIG=/home/aperture/.openclaw/openclaw.json
+
+[Install]
+WantedBy=multi-user.target
+

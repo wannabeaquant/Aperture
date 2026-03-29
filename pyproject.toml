@@ -1,0 +1,44 @@
+[build-system]
+requires = ["hatchling>=1.27.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "aperture"
+version = "0.1.0"
+description = "Aperture is an India-focused outbound agency engine powered by OpenClaw."
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "MIT" }
+authors = [
+  { name = "OpenAI Codex" },
+]
+dependencies = [
+  "alembic>=1.16.0",
+  "boto3>=1.38.18",
+  "dramatiq>=1.17.1",
+  "fastapi>=0.115.12",
+  "httpx>=0.28.1",
+  "jinja2>=3.1.6",
+  "playwright>=1.52.0",
+  "psycopg[binary]>=3.2.9",
+  "pydantic-settings>=2.10.1",
+  "redis>=6.0.0",
+  "sqlalchemy>=2.0.41",
+  "typer>=0.16.0",
+  "twilio>=9.6.0",
+  "uvicorn[standard]>=0.34.2",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.3.5",
+  "pytest-asyncio>=0.26.0",
+  "pytest-cov>=6.1.1",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["backend/app"]
+
+[tool.pytest.ini_options]
+pythonpath = ["backend"]
+testpaths = ["backend/tests"]
