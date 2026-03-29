@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 
 from app.admin.dashboard import router as admin_router
@@ -19,7 +21,14 @@ from app.models import Base
 
 def create_app() -> FastAPI:
     settings = get_settings()
-    app = FastAPI(title="Aperture", version="0.1.0", debug=settings.env == "development")
+
+    @asynccontextmanager
+    async def lifespan(_: FastAPI):
+        if not settings.skip_db_init:
+            Base.metadata.create_all(bind=engine)
+        yield
+
+    app = FastAPI(title="Aperture", version="0.1.0", debug=settings.env == "development", lifespan=lifespan)
     app.include_router(health_router)
     app.include_router(leads_router)
     app.include_router(actions_router)
@@ -30,11 +39,6 @@ def create_app() -> FastAPI:
     app.include_router(providers_router)
     app.include_router(webhooks_router)
     app.include_router(admin_router)
-
-    @app.on_event("startup")
-    def startup() -> None:
-        if not settings.skip_db_init:
-            Base.metadata.create_all(bind=engine)
 
     return app
 
