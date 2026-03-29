@@ -257,3 +257,13 @@ class Artifact(Base, UUIDMixin, TimestampMixin):
     artifact_type: Mapped[str] = mapped_column(String(128), nullable=False)
     file_path: Mapped[str] = mapped_column(String(1024), nullable=False)
     metadata_json: Mapped[dict] = mapped_column(JSON, default=dict, nullable=False)
+
+
+class SalesTask(Base, UUIDMixin, TimestampMixin):
+    __tablename__ = "sales_tasks"
+
+    business_id: Mapped[str] = mapped_column(ForeignKey("businesses.id", ondelete="CASCADE"), nullable=False)
+    reply_event_id: Mapped[str | None] = mapped_column(ForeignKey("reply_events.id", ondelete="SET NULL"))
+    title: Mapped[str] = mapped_column(String(255), nullable=False)
+    status: Mapped[str] = mapped_column(String(64), default="open", nullable=False)
+    notes: Mapped[str | None] = mapped_column(Text)

@@ -8,6 +8,7 @@ from app.core.enums import AIRunJobType, ReplyIntent, SuppressionReason
 from app.models.domain import Business, ReplyEvent
 from app.schemas.workflows import AIJobResponse, ReplyClassifyRequest
 from app.services.openclaw_jobs import run_openclaw_job
+from app.services.replies import apply_reply_outcome
 from app.services.suppression import suppress_business
 
 
@@ -39,6 +40,6 @@ def classify_reply(payload: ReplyClassifyRequest, db: Session = Depends(get_db))
     else:
         reply.intent = ReplyIntent.UNKNOWN
     reply.recommended_action = run.output_json.get("reply") if isinstance(run.output_json, dict) else None
+    apply_reply_outcome(db, business=business, reply=reply)
     db.commit()
     return AIJobResponse(ai_run_id=str(run.id), status=run.status.value, payload=run.output_json)
-
