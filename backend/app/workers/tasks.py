@@ -10,6 +10,7 @@ from app.services.campaigns import materialize_campaign_members
 from app.services.campaign_execution import process_campaign
 from app.services.discovery import enrich_business_by_id
 from app.services.dispatch import dispatch_draft
+from app.services.drafts import generate_initial_draft_for_routing
 from app.services.evidence import build_basic_evidence_pack
 from app.services.openclaw_jobs import run_openclaw_job
 from app.services.provider_health import sync_openclaw_health
@@ -87,7 +88,9 @@ def run_full_lead_pipeline(business_id: str) -> None:
         )
         asyncio.run(enrich_business_by_id(db, business_id))
         compute_score(db, business)
-        build_basic_evidence_pack(db, business)
+        evidence = build_basic_evidence_pack(db, business)
+        db.refresh(business)
+        generate_initial_draft_for_routing(db, business=business, evidence=evidence)
 
 
 @dramatiq.actor(broker=broker)

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from collections.abc import Iterable
+from dataclasses import dataclass
 
 from sqlalchemy.orm import Session
 
@@ -18,6 +19,13 @@ from app.services.normalization import (
     normalize_phone,
 )
 from app.services.routing import build_segment
+
+
+@dataclass(slots=True)
+class IngestOutcome:
+    imported: int
+    updated: int
+    business_ids: list[str]
 
 
 def _coerce_state(place: dict) -> BusinessState:
@@ -157,8 +165,14 @@ def _upsert_website(db: Session, *, business: Business, url: str, audit_summary:
 
 
 def ingest_places_payload(db: Session, places: Iterable[dict]) -> tuple[int, int]:
+    outcome = ingest_places_payload_detailed(db, places)
+    return outcome.imported, outcome.updated
+
+
+def ingest_places_payload_detailed(db: Session, places: Iterable[dict]) -> IngestOutcome:
     imported = 0
     updated = 0
+    business_ids: list[str] = []
 
     for place in places:
         place_id = place.get("id")
@@ -233,14 +247,21 @@ def ingest_places_payload(db: Session, places: Iterable[dict]) -> tuple[int, int
             _upsert_contact(db, business=business, channel=ChannelType.WHATSAPP, value=phone_value, source_url=None, whatsapp_likely=True)
 
         _sync_segment(db, business)
+        business_ids.append(str(business.id))
 
     db.flush()
-    return imported, updated
+    return IngestOutcome(imported=imported, updated=updated, business_ids=business_ids)
 
 
 def ingest_maps_web_payload(db: Session, cards: Iterable[GoogleMapsCard]) -> tuple[int, int]:
+    outcome = ingest_maps_web_payload_detailed(db, cards)
+    return outcome.imported, outcome.updated
+
+
+def ingest_maps_web_payload_detailed(db: Session, cards: Iterable[GoogleMapsCard]) -> IngestOutcome:
     imported = 0
     updated = 0
+    business_ids: list[str] = []
 
     for card in cards:
         if not card.name:
@@ -330,9 +351,10 @@ def ingest_maps_web_payload(db: Session, cards: Iterable[GoogleMapsCard]) -> tup
             )
 
         _sync_segment(db, business)
+        business_ids.append(str(business.id))
 
     db.flush()
-    return imported, updated
+    return IngestOutcome(imported=imported, updated=updated, business_ids=business_ids)
 
 
 def _search_queries(business: Business) -> list[str]:

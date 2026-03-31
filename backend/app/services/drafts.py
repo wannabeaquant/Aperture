@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from app.core.enums import AIRunJobType, CampaignChannel
+from app.core.enums import AIRunJobType, CampaignChannel, ChannelType
 from app.models.domain import Business, DraftMessage, EvidencePack
 from app.services.openclaw_jobs import run_openclaw_job
 
@@ -55,3 +55,23 @@ def generate_draft(
     db.flush()
     return draft
 
+
+def generate_initial_draft_for_routing(
+    db,
+    *,
+    business: Business,
+    evidence: EvidencePack,
+    template_version: str = "v1",
+) -> DraftMessage | None:
+    if business.segment is None:
+        return None
+    if business.segment.routing_channel != ChannelType.EMAIL:
+        return None
+    return generate_draft(
+        db,
+        business=business,
+        evidence=evidence,
+        channel=CampaignChannel.EMAIL,
+        sequence_step=0,
+        template_version=template_version,
+    )
