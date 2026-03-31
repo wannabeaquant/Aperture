@@ -78,6 +78,12 @@ Terminal 3:
 powershell -ExecutionPolicy Bypass -File .\ops\windows\start-worker.ps1
 ```
 
+Optional Terminal 4 for continuous discovery + enrichment + draft generation:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\ops\windows\start-pipeline-loop.ps1
+```
+
 ## Important laptop settings
 
 If you want Aperture to keep running:

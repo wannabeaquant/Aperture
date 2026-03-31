@@ -41,6 +41,9 @@ class Settings(BaseSettings):
     openclaw_agent_draft_email: str = "draft-email"
     openclaw_agent_draft_whatsapp: str = "draft-whatsapp"
     openclaw_agent_reply_classifier: str = "reply-classifier"
+    codex_budget_window_hours: int = 5
+    codex_budget_max_runs_per_window: int = 30
+    codex_switch_threshold_percent: int = 50
 
     outreach_domain: str = "outreach.example.com"
     email_daily_cap: int = 30
