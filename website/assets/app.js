@@ -1,0 +1,148 @@
+const revealElements = document.querySelectorAll("[data-reveal]");
+
+const observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("revealed");
+        observer.unobserve(entry.target);
+      }
+    });
+  },
+  { threshold: 0.16 }
+);
+
+revealElements.forEach((element) => observer.observe(element));
+
+const yearNode = document.querySelector("[data-year]");
+if (yearNode) {
+  yearNode.textContent = String(new Date().getFullYear());
+}
+
+const path = window.location.pathname.replace(/\/+$/, "") || "/";
+document.querySelectorAll("[data-nav]").forEach((link) => {
+  const href = link.getAttribute("href");
+  if (!href) {
+    return;
+  }
+
+  if ((href === "/" && path === "/") || (href !== "/" && path.endsWith(href))) {
+    link.classList.add("active");
+  }
+});
+
+document.querySelectorAll("[data-tilt-scene]").forEach((scene) => {
+  const resetScene = () => {
+    scene.style.setProperty("--scene-rotate-x", "-12deg");
+    scene.style.setProperty("--scene-rotate-y", "14deg");
+    scene.style.setProperty("--scene-shift-x", "0px");
+    scene.style.setProperty("--scene-shift-y", "0px");
+  };
+
+  resetScene();
+
+  scene.addEventListener("pointermove", (event) => {
+    const rect = scene.getBoundingClientRect();
+    const x = (event.clientX - rect.left) / rect.width - 0.5;
+    const y = (event.clientY - rect.top) / rect.height - 0.5;
+    scene.style.setProperty("--scene-rotate-x", `${-12 - y * 18}deg`);
+    scene.style.setProperty("--scene-rotate-y", `${14 + x * 22}deg`);
+    scene.style.setProperty("--scene-shift-x", `${x * 28}px`);
+    scene.style.setProperty("--scene-shift-y", `${y * 28}px`);
+  });
+
+  scene.addEventListener("pointerleave", resetScene);
+});
+
+document.querySelectorAll("[data-intent-chip]").forEach((chip) => {
+  chip.addEventListener("click", () => {
+    const group = chip.closest("[data-intent-group]");
+    const form = chip.closest("form");
+    const briefField = form?.querySelector("textarea[name='brief']");
+    if (!group || !(briefField instanceof HTMLTextAreaElement)) {
+      return;
+    }
+
+    group.querySelectorAll("[data-intent-chip]").forEach((node) => node.classList.remove("is-selected"));
+    chip.classList.add("is-selected");
+
+    const value = chip.getAttribute("data-intent-chip");
+    if (!value) {
+      return;
+    }
+
+    if (!briefField.value.trim()) {
+      briefField.value = `${value} project.`;
+    } else if (!briefField.value.toLowerCase().includes(value.toLowerCase())) {
+      briefField.value = `${value} project. ${briefField.value}`.trim();
+    }
+
+    briefField.focus();
+  });
+});
+
+const FORM_ENDPOINT = "https://formsubmit.co/ajax/cachemoney0410@gmail.com";
+
+document.querySelectorAll("[data-contact-form]").forEach((form) => {
+  const statusNode = form.querySelector("[data-form-status]");
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    if (!(form instanceof HTMLFormElement)) {
+      return;
+    }
+
+    const submitButton = form.querySelector("button[type='submit']");
+    const formData = new FormData(form);
+    const company = String(formData.get("company") || "").trim();
+    const email = String(formData.get("email") || "").trim();
+    const brief = String(formData.get("brief") || "").trim();
+    const payload = new FormData();
+    payload.append("company", company);
+    payload.append("email", email);
+    payload.append("brief", brief);
+    payload.append("_subject", `New Aperture inquiry from ${company}`);
+    payload.append("_captcha", "false");
+    payload.append("_template", "table");
+
+    if (statusNode) {
+      statusNode.textContent = "Sending inquiry...";
+      statusNode.className = "form-status";
+    }
+
+    if (submitButton instanceof HTMLButtonElement) {
+      submitButton.disabled = true;
+      submitButton.textContent = "Sending";
+    }
+
+    try {
+      const response = await fetch(FORM_ENDPOINT, {
+        method: "POST",
+        headers: { Accept: "application/json" },
+        body: payload,
+      });
+
+      const result = await response.json();
+      if (!response.ok) {
+        throw new Error(result.message || "Unable to send inquiry.");
+      }
+
+      form.reset();
+      if (statusNode) {
+        statusNode.textContent = "Inquiry sent. Aperture will reach out shortly.";
+        statusNode.className = "form-status success";
+      }
+    } catch (error) {
+      if (statusNode) {
+        statusNode.textContent =
+          error instanceof Error ? error.message : "Unable to send inquiry. Email us at cachemoney0410@gmail.com.";
+        statusNode.className = "form-status error";
+      }
+    } finally {
+      if (submitButton instanceof HTMLButtonElement) {
+        submitButton.disabled = false;
+        submitButton.textContent = "Start the conversation";
+      }
+    }
+  });
+});
