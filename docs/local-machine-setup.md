@@ -8,15 +8,17 @@ Run Aperture on your laptop for early validation while keeping it separate from 
 
 - Aperture has its own project `.env`
 - Aperture has its own OpenClaw config at [openclaw/local/aperture.local.json5](C:\CS\Agency\Aperture\openclaw\local\aperture.local.json5)
+- Aperture has its own OpenClaw state dir at [openclaw/state/local](C:\CS\Agency\Aperture\openclaw\state\local)
 - Aperture has its own startup scripts under [ops/windows](C:\CS\Agency\Aperture\ops\windows)
 
-This keeps the runtime configuration separate.
-It does not fully isolate provider account identity in the way a separate VPS would.
+This keeps the runtime configuration and OpenClaw local state separate from your personal setup.
+The app will read the Aperture OpenClaw config and state dir, not the defaults used by your personal setup.
 
 ## Files created for local use
 
 - [\.env](C:\CS\Agency\Aperture\.env)
 - [bootstrap-local.ps1](C:\CS\Agency\Aperture\ops\windows\bootstrap-local.ps1)
+- [setup-openclaw.ps1](C:\CS\Agency\Aperture\ops\windows\setup-openclaw.ps1)
 - [start-api.ps1](C:\CS\Agency\Aperture\ops\windows\start-api.ps1)
 - [start-worker.ps1](C:\CS\Agency\Aperture\ops\windows\start-worker.ps1)
 - [probe-openclaw.ps1](C:\CS\Agency\Aperture\ops\windows\probe-openclaw.ps1)
@@ -44,6 +46,12 @@ Terminal 1:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\ops\windows\probe-openclaw.ps1
+```
+
+If Aperture has not been logged in yet, run this once first:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\ops\windows\setup-openclaw.ps1
 ```
 
 Terminal 2:

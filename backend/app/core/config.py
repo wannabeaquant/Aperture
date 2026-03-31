@@ -32,6 +32,7 @@ class Settings(BaseSettings):
 
     openclaw_command: str = "openclaw"
     openclaw_config: str = ""
+    openclaw_state_dir: str = ""
     openclaw_status_timeout_seconds: int = 5
     openclaw_agent_timeout_seconds: int = 90
     openclaw_agent_enrichment: str = "lead-enrichment"
@@ -52,7 +53,9 @@ class Settings(BaseSettings):
     def openclaw_env(self) -> dict[str, str]:
         env: dict[str, str] = {}
         if self.openclaw_config:
-            env["OPENCLAW_CONFIG"] = self.openclaw_config
+            env["OPENCLAW_CONFIG_PATH"] = self.openclaw_config
+        if self.openclaw_state_dir:
+            env["OPENCLAW_STATE_DIR"] = self.openclaw_state_dir
         return env
 
 
