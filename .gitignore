@@ -14,4 +14,13 @@ backend/.pytest_cache/
 backend/.coverage
 *.sqlite3
 openclaw/state/
+openclaw/local/*.json5
+openclaw/local/*.bak*
+openclaw/workspaces/**/.openclaw/
+openclaw/workspaces/**/BOOTSTRAP.md
+openclaw/workspaces/**/HEARTBEAT.md
+openclaw/workspaces/**/IDENTITY.md
+openclaw/workspaces/**/SOUL.md
+openclaw/workspaces/**/TOOLS.md
+openclaw/workspaces/**/USER.md
 

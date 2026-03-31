@@ -15,6 +15,8 @@ Run Aperture on your laptop for early validation while keeping it separate from 
 This keeps the runtime configuration, agent workspaces, and OpenClaw local state separate from your personal setup.
 The app will read the Aperture OpenClaw config and state dir, not the defaults used by your personal setup.
 
+The local Aperture OpenClaw config is gitignored because onboarding writes auth/runtime metadata into it. The sanitized reference file is [openclaw.json5.example](C:\CS\Agency\Aperture\openclaw\openclaw.json5.example).
+
 ## How it differs from your personal OpenClaw
 
 - Personal OpenClaw still uses your default home config and state under your user profile.
