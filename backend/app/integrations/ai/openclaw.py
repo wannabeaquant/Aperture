@@ -2,9 +2,11 @@ from __future__ import annotations
 
 import json
 import os
+import shutil
 import subprocess
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
+from pathlib import Path
 from typing import Any
 
 from app.core.config import Settings, get_settings
@@ -25,11 +27,34 @@ class OpenClawRuntime:
     def __init__(self, settings: Settings | None = None) -> None:
         self.settings = settings or get_settings()
 
+    def _resolve_command(self) -> str:
+        command = self.settings.openclaw_command
+        is_explicit_path = any(sep in command for sep in ("\\", "/")) or ":" in command
+        if is_explicit_path and Path(command).exists():
+            return command
+
+        resolved = shutil.which(command)
+        if resolved:
+            return resolved
+
+        if os.name == "nt":
+            for candidate in ("openclaw.cmd", "openclaw.exe", "openclaw.ps1"):
+                resolved = shutil.which(candidate)
+                if resolved:
+                    return resolved
+            appdata = os.environ.get("APPDATA")
+            if appdata:
+                for candidate in ("openclaw.cmd", "openclaw.exe", "openclaw.ps1"):
+                    path = Path(appdata) / "npm" / candidate
+                    if path.exists():
+                        return str(path)
+        return command
+
     def _run(self, args: list[str], timeout_seconds: int) -> subprocess.CompletedProcess[str]:
         env = os.environ.copy()
         env.update(self.settings.openclaw_env)
         return subprocess.run(
-            [self.settings.openclaw_command, *args],
+            [self._resolve_command(), *args],
             check=False,
             capture_output=True,
             text=True,
