@@ -41,6 +41,7 @@ class SendEligibility(str, Enum):
 
 class SourceType(str, Enum):
     GOOGLE_PLACES = "google_places"
+    GOOGLE_MAPS_WEB = "google_maps_web"
     WEBSITE = "website"
     JUSTDIAL = "justdial"
     INDIAMART = "indiamart"

@@ -23,6 +23,31 @@ from app.core.enums import (
 from app.models.base import Base, TimestampMixin, UUIDMixin
 
 
+def _enum_type(enum_cls: type, name: str) -> Enum:
+    return Enum(enum_cls, values_callable=lambda items: [item.value for item in items], name=name)
+
+
+def _named_enum_type(enum_cls: type, name: str) -> Enum:
+    return Enum(enum_cls, name=name)
+
+
+BUSINESS_STATE_ENUM = _enum_type(BusinessState, "businessstate")
+SERVICE_LANE_ENUM = _enum_type(ServiceLane, "servicelane")
+CHANNEL_TYPE_ENUM = _named_enum_type(ChannelType, "channeltype")
+VERIFICATION_STATUS_ENUM = _enum_type(VerificationStatus, "verificationstatus")
+SEND_ELIGIBILITY_ENUM = _enum_type(SendEligibility, "sendeligibility")
+SOURCE_TYPE_ENUM = _enum_type(SourceType, "sourcetype")
+CAMPAIGN_CHANNEL_ENUM = _enum_type(CampaignChannel, "campaignchannel")
+CAMPAIGN_STATUS_ENUM = _enum_type(CampaignStatus, "campaignstatus")
+PROVIDER_KIND_ENUM = _enum_type(ProviderKind, "providerkind")
+PROVIDER_HEALTH_ENUM = _enum_type(ProviderHealth, "providerhealth")
+AI_RUN_JOB_TYPE_ENUM = _enum_type(AIRunJobType, "airunjobtype")
+AI_RUN_STATUS_ENUM = _enum_type(AIRunStatus, "airunstatus")
+MESSAGE_DIRECTION_ENUM = _named_enum_type(MessageDirection, "messagedirection")
+REPLY_INTENT_ENUM = _enum_type(ReplyIntent, "replyintent")
+SUPPRESSION_REASON_ENUM = _enum_type(SuppressionReason, "suppressionreason")
+
+
 class Business(Base, UUIDMixin, TimestampMixin):
     __tablename__ = "businesses"
 
@@ -31,7 +56,7 @@ class Business(Base, UUIDMixin, TimestampMixin):
     google_place_id: Mapped[str | None] = mapped_column(String(255), unique=True)
     normalized_domain: Mapped[str | None] = mapped_column(String(255), index=True)
     normalized_phone: Mapped[str | None] = mapped_column(String(64), index=True)
-    state: Mapped[BusinessState] = mapped_column(Enum(BusinessState), default=BusinessState.NO_WEBSITE, nullable=False)
+    state: Mapped[BusinessState] = mapped_column(BUSINESS_STATE_ENUM, default=BusinessState.NO_WEBSITE, nullable=False)
     city: Mapped[str | None] = mapped_column(String(128))
     category: Mapped[str | None] = mapped_column(String(128))
     subcategory: Mapped[str | None] = mapped_column(String(128))
@@ -61,7 +86,7 @@ class SourceRecord(Base, UUIDMixin, TimestampMixin):
     __tablename__ = "source_records"
 
     business_id: Mapped[str | None] = mapped_column(ForeignKey("businesses.id", ondelete="CASCADE"))
-    source_type: Mapped[SourceType] = mapped_column(Enum(SourceType), nullable=False, index=True)
+    source_type: Mapped[SourceType] = mapped_column(SOURCE_TYPE_ENUM, nullable=False, index=True)
     source_id: Mapped[str | None] = mapped_column(String(255), index=True)
     source_url: Mapped[str | None] = mapped_column(String(1024))
     raw_payload: Mapped[dict] = mapped_column(JSON, default=dict, nullable=False)
@@ -88,17 +113,17 @@ class ContactPoint(Base, UUIDMixin, TimestampMixin):
     __table_args__ = (UniqueConstraint("business_id", "channel", "value", name="uq_contact_points_business_channel_value"),)
 
     business_id: Mapped[str] = mapped_column(ForeignKey("businesses.id", ondelete="CASCADE"), nullable=False)
-    channel: Mapped[ChannelType] = mapped_column(Enum(ChannelType), nullable=False, index=True)
+    channel: Mapped[ChannelType] = mapped_column(CHANNEL_TYPE_ENUM, nullable=False, index=True)
     value: Mapped[str] = mapped_column(String(255), nullable=False)
     public_business_contact: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
     verification_status: Mapped[VerificationStatus] = mapped_column(
-        Enum(VerificationStatus), default=VerificationStatus.UNVERIFIED, nullable=False
+        VERIFICATION_STATUS_ENUM, default=VerificationStatus.UNVERIFIED, nullable=False
     )
     confidence: Mapped[float] = mapped_column(Float, default=0.0, nullable=False)
     source_url: Mapped[str | None] = mapped_column(String(1024))
     whatsapp_likely: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
     send_eligibility: Mapped[SendEligibility] = mapped_column(
-        Enum(SendEligibility), default=SendEligibility.HOLD, nullable=False
+        SEND_ELIGIBILITY_ENUM, default=SendEligibility.HOLD, nullable=False
     )
 
     business = relationship("Business", back_populates="contacts")
@@ -108,9 +133,9 @@ class LeadSegment(Base, UUIDMixin, TimestampMixin):
     __tablename__ = "lead_segments"
 
     business_id: Mapped[str] = mapped_column(ForeignKey("businesses.id", ondelete="CASCADE"), nullable=False, unique=True)
-    state: Mapped[BusinessState] = mapped_column(Enum(BusinessState), nullable=False)
-    service_lane: Mapped[ServiceLane] = mapped_column(Enum(ServiceLane), nullable=False)
-    routing_channel: Mapped[ChannelType] = mapped_column(Enum(ChannelType), nullable=False)
+    state: Mapped[BusinessState] = mapped_column(BUSINESS_STATE_ENUM, nullable=False)
+    service_lane: Mapped[ServiceLane] = mapped_column(SERVICE_LANE_ENUM, nullable=False)
+    routing_channel: Mapped[ChannelType] = mapped_column(CHANNEL_TYPE_ENUM, nullable=False)
     routing_tier: Mapped[str] = mapped_column(String(64), default="normal", nullable=False)
     rationale: Mapped[str | None] = mapped_column(Text)
 
@@ -123,7 +148,7 @@ class EvidencePack(Base, UUIDMixin, TimestampMixin):
     business_id: Mapped[str] = mapped_column(ForeignKey("businesses.id", ondelete="CASCADE"), nullable=False)
     observed_issue: Mapped[str] = mapped_column(Text, nullable=False)
     consequence: Mapped[str] = mapped_column(Text, nullable=False)
-    offer_match: Mapped[ServiceLane] = mapped_column(Enum(ServiceLane), nullable=False)
+    offer_match: Mapped[ServiceLane] = mapped_column(SERVICE_LANE_ENUM, nullable=False)
     evidence_json: Mapped[dict] = mapped_column(JSON, default=dict, nullable=False)
     version: Mapped[int] = mapped_column(Integer, default=1, nullable=False)
 
@@ -140,8 +165,8 @@ class Campaign(Base, UUIDMixin, TimestampMixin):
     __tablename__ = "campaigns"
 
     name: Mapped[str] = mapped_column(String(255), nullable=False)
-    channel: Mapped[CampaignChannel] = mapped_column(Enum(CampaignChannel), nullable=False)
-    status: Mapped[CampaignStatus] = mapped_column(Enum(CampaignStatus), default=CampaignStatus.DRAFT, nullable=False)
+    channel: Mapped[CampaignChannel] = mapped_column(CAMPAIGN_CHANNEL_ENUM, nullable=False)
+    status: Mapped[CampaignStatus] = mapped_column(CAMPAIGN_STATUS_ENUM, default=CampaignStatus.DRAFT, nullable=False)
     template_version: Mapped[str] = mapped_column(String(64), nullable=False)
     daily_cap: Mapped[int] = mapped_column(Integer, nullable=False)
     filters: Mapped[dict] = mapped_column(JSON, default=dict, nullable=False)
@@ -164,7 +189,7 @@ class MessageTemplate(Base, UUIDMixin, TimestampMixin):
     __tablename__ = "message_templates"
 
     name: Mapped[str] = mapped_column(String(255), nullable=False)
-    channel: Mapped[CampaignChannel] = mapped_column(Enum(CampaignChannel), nullable=False)
+    channel: Mapped[CampaignChannel] = mapped_column(CAMPAIGN_CHANNEL_ENUM, nullable=False)
     version: Mapped[str] = mapped_column(String(64), nullable=False)
     body: Mapped[str] = mapped_column(Text, nullable=False)
     variables: Mapped[dict] = mapped_column(JSON, default=dict, nullable=False)
@@ -176,8 +201,8 @@ class AIRun(Base, UUIDMixin, TimestampMixin):
     business_id: Mapped[str | None] = mapped_column(ForeignKey("businesses.id", ondelete="SET NULL"))
     provider_name: Mapped[str] = mapped_column(String(128), nullable=False)
     model_alias: Mapped[str] = mapped_column(String(128), nullable=False)
-    job_type: Mapped[AIRunJobType] = mapped_column(Enum(AIRunJobType), nullable=False)
-    status: Mapped[AIRunStatus] = mapped_column(Enum(AIRunStatus), default=AIRunStatus.PENDING, nullable=False)
+    job_type: Mapped[AIRunJobType] = mapped_column(AI_RUN_JOB_TYPE_ENUM, nullable=False)
+    status: Mapped[AIRunStatus] = mapped_column(AI_RUN_STATUS_ENUM, default=AIRunStatus.PENDING, nullable=False)
     duration_ms: Mapped[int | None] = mapped_column(Integer)
     output_json: Mapped[dict] = mapped_column(JSON, default=dict, nullable=False)
     error_text: Mapped[str | None] = mapped_column(Text)
@@ -189,7 +214,7 @@ class DraftMessage(Base, UUIDMixin, TimestampMixin):
     business_id: Mapped[str] = mapped_column(ForeignKey("businesses.id", ondelete="CASCADE"), nullable=False)
     evidence_pack_id: Mapped[str] = mapped_column(ForeignKey("evidence_packs.id", ondelete="CASCADE"), nullable=False)
     ai_run_id: Mapped[str | None] = mapped_column(ForeignKey("ai_runs.id", ondelete="SET NULL"))
-    channel: Mapped[CampaignChannel] = mapped_column(Enum(CampaignChannel), nullable=False)
+    channel: Mapped[CampaignChannel] = mapped_column(CAMPAIGN_CHANNEL_ENUM, nullable=False)
     sequence_step: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
     subject: Mapped[str | None] = mapped_column(String(255))
     body: Mapped[str] = mapped_column(Text, nullable=False)
@@ -202,9 +227,9 @@ class SendAttempt(Base, UUIDMixin, TimestampMixin):
 
     draft_message_id: Mapped[str | None] = mapped_column(ForeignKey("draft_messages.id", ondelete="SET NULL"))
     business_id: Mapped[str] = mapped_column(ForeignKey("businesses.id", ondelete="CASCADE"), nullable=False)
-    direction: Mapped[MessageDirection] = mapped_column(Enum(MessageDirection), nullable=False)
-    provider_kind: Mapped[ProviderKind] = mapped_column(Enum(ProviderKind), nullable=False)
-    channel: Mapped[CampaignChannel] = mapped_column(Enum(CampaignChannel), nullable=False)
+    direction: Mapped[MessageDirection] = mapped_column(MESSAGE_DIRECTION_ENUM, nullable=False)
+    provider_kind: Mapped[ProviderKind] = mapped_column(PROVIDER_KIND_ENUM, nullable=False)
+    channel: Mapped[CampaignChannel] = mapped_column(CAMPAIGN_CHANNEL_ENUM, nullable=False)
     idempotency_key: Mapped[str] = mapped_column(String(255), nullable=False, unique=True)
     provider_message_id: Mapped[str | None] = mapped_column(String(255))
     status: Mapped[str] = mapped_column(String(64), default="queued", nullable=False)
@@ -216,10 +241,10 @@ class ReplyEvent(Base, UUIDMixin, TimestampMixin):
 
     business_id: Mapped[str] = mapped_column(ForeignKey("businesses.id", ondelete="CASCADE"), nullable=False)
     send_attempt_id: Mapped[str | None] = mapped_column(ForeignKey("send_attempts.id", ondelete="SET NULL"))
-    provider_kind: Mapped[ProviderKind] = mapped_column(Enum(ProviderKind), nullable=False)
+    provider_kind: Mapped[ProviderKind] = mapped_column(PROVIDER_KIND_ENUM, nullable=False)
     payload: Mapped[dict] = mapped_column(JSON, default=dict, nullable=False)
     normalized_text: Mapped[str | None] = mapped_column(Text)
-    intent: Mapped[ReplyIntent] = mapped_column(Enum(ReplyIntent), default=ReplyIntent.UNKNOWN, nullable=False)
+    intent: Mapped[ReplyIntent] = mapped_column(REPLY_INTENT_ENUM, default=ReplyIntent.UNKNOWN, nullable=False)
     recommended_action: Mapped[str | None] = mapped_column(Text)
 
 
@@ -227,8 +252,8 @@ class SuppressionEntry(Base, UUIDMixin, TimestampMixin):
     __tablename__ = "suppression_entries"
 
     business_id: Mapped[str | None] = mapped_column(ForeignKey("businesses.id", ondelete="CASCADE"))
-    channel: Mapped[ChannelType | None] = mapped_column(Enum(ChannelType))
-    reason: Mapped[SuppressionReason] = mapped_column(Enum(SuppressionReason), nullable=False)
+    channel: Mapped[ChannelType | None] = mapped_column(CHANNEL_TYPE_ENUM)
+    reason: Mapped[SuppressionReason] = mapped_column(SUPPRESSION_REASON_ENUM, nullable=False)
     expires_at: Mapped[str | None] = mapped_column(DateTime(timezone=True))
 
 
@@ -236,9 +261,9 @@ class ProviderAccount(Base, UUIDMixin, TimestampMixin):
     __tablename__ = "provider_accounts"
     __table_args__ = (UniqueConstraint("provider_kind", "provider_name", name="uq_provider_accounts_kind_name"),)
 
-    provider_kind: Mapped[ProviderKind] = mapped_column(Enum(ProviderKind), nullable=False)
+    provider_kind: Mapped[ProviderKind] = mapped_column(PROVIDER_KIND_ENUM, nullable=False)
     provider_name: Mapped[str] = mapped_column(String(128), nullable=False)
-    health: Mapped[ProviderHealth] = mapped_column(Enum(ProviderHealth), default=ProviderHealth.OFFLINE, nullable=False)
+    health: Mapped[ProviderHealth] = mapped_column(PROVIDER_HEALTH_ENUM, default=ProviderHealth.OFFLINE, nullable=False)
     default_model: Mapped[str | None] = mapped_column(String(255))
     status_payload: Mapped[dict] = mapped_column(JSON, default=dict, nullable=False)
     last_probe_at: Mapped[str | None] = mapped_column(DateTime(timezone=True))

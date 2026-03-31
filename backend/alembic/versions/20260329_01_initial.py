@@ -25,7 +25,17 @@ def upgrade() -> None:
     )
     verificationstatus = postgresql.ENUM("unverified", "observed_public", "verified_live", "invalid", name="verificationstatus", create_type=False)
     sendeligibility = postgresql.ENUM("eligible", "hold", "blocked", name="sendeligibility", create_type=False)
-    sourcetype = postgresql.ENUM("google_places", "website", "justdial", "indiamart", "social", "search", name="sourcetype", create_type=False)
+    sourcetype = postgresql.ENUM(
+        "google_places",
+        "google_maps_web",
+        "website",
+        "justdial",
+        "indiamart",
+        "social",
+        "search",
+        name="sourcetype",
+        create_type=False,
+    )
     campaignchannel = postgresql.ENUM("email", "whatsapp", name="campaignchannel", create_type=False)
     campaignstatus = postgresql.ENUM("draft", "ready", "running", "paused", "completed", name="campaignstatus", create_type=False)
     providerkind = postgresql.ENUM("openclaw", "ses", "twilio", name="providerkind", create_type=False)

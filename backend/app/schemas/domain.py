@@ -50,6 +50,17 @@ class PlacesMatrixResponse(BaseModel):
     total_places: int
 
 
+class MapsWebIngestRequest(BaseModel):
+    text_query: str
+    max_cards: int = 10
+
+
+class MapsWebMatrixRequest(BaseModel):
+    cities: list[str]
+    categories: list[str]
+    max_cards: int = 10
+
+
 class BusinessRead(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 

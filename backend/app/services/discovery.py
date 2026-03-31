@@ -6,6 +6,7 @@ from sqlalchemy.orm import Session
 
 from app.core.enums import BusinessState, ChannelType, SendEligibility, SourceType, VerificationStatus
 from app.integrations.discovery.directories import DirectoryClient
+from app.integrations.discovery.google_maps_web import GoogleMapsCard
 from app.integrations.discovery.search import SearchClient, SearchResult
 from app.integrations.discovery.websites import WebsiteClient
 from app.models.domain import Business, BusinessLocation, ContactPoint, LeadSegment, SourceRecord, Website
@@ -230,6 +231,103 @@ def ingest_places_payload(db: Session, places: Iterable[dict]) -> tuple[int, int
         if phone_value:
             _upsert_contact(db, business=business, channel=ChannelType.PHONE, value=phone_value, source_url=None)
             _upsert_contact(db, business=business, channel=ChannelType.WHATSAPP, value=phone_value, source_url=None, whatsapp_likely=True)
+
+        _sync_segment(db, business)
+
+    db.flush()
+    return imported, updated
+
+
+def ingest_maps_web_payload(db: Session, cards: Iterable[GoogleMapsCard]) -> tuple[int, int]:
+    imported = 0
+    updated = 0
+
+    for card in cards:
+        if not card.name:
+            continue
+
+        normalized_domain = normalize_domain(card.website) if card.website else None
+        normalized_phone = normalize_phone(card.phone) if card.phone else None
+        state = BusinessState.HAS_WEBSITE_WEAK if card.website else BusinessState.NO_WEBSITE
+        category = card.category or card.subcategory
+
+        business = None
+        if normalized_domain:
+            business = db.query(Business).filter(Business.normalized_domain == normalized_domain).one_or_none()
+        if business is None and normalized_phone:
+            business = db.query(Business).filter(Business.normalized_phone == normalized_phone).one_or_none()
+        if business is None:
+            business = (
+                db.query(Business)
+                .filter(Business.normalized_name == normalize_name(card.name), Business.city == card.city)
+                .one_or_none()
+            )
+
+        if business is None:
+            business = Business(
+                name=card.name,
+                normalized_name=normalize_name(card.name),
+                google_place_id=None,
+                normalized_domain=normalized_domain,
+                normalized_phone=normalized_phone,
+                state=state,
+                city=card.city,
+                category=category,
+                subcategory=card.subcategory,
+                priority_score=35.0,
+            )
+            db.add(business)
+            db.flush()
+            imported += 1
+        else:
+            business.name = card.name
+            business.normalized_name = normalize_name(card.name)
+            business.normalized_domain = business.normalized_domain or normalized_domain
+            business.normalized_phone = business.normalized_phone or normalized_phone
+            if business.state == BusinessState.NO_WEBSITE and card.website:
+                business.state = BusinessState.HAS_WEBSITE_WEAK
+            business.city = business.city or card.city
+            business.category = business.category or category
+            business.subcategory = business.subcategory or card.subcategory
+            updated += 1
+
+        _upsert_source(
+            db,
+            business=business,
+            source_type=SourceType.GOOGLE_MAPS_WEB,
+            source_id=None,
+            source_url=card.place_url or None,
+            raw_payload={
+                "query": card.query,
+                "text": card.text,
+                "website": card.website,
+                "phone": card.phone,
+                "rating": card.rating,
+                "reviews": card.reviews,
+            },
+            parser_version="maps-web-v1",
+        )
+
+        if card.address:
+            location_row = (
+                db.query(BusinessLocation).filter(BusinessLocation.business_id == business.id, BusinessLocation.address == card.address).one_or_none()
+            )
+            if location_row is None:
+                db.add(BusinessLocation(business_id=business.id, address=card.address, city=card.city))
+
+        if card.website:
+            _upsert_website(db, business=business, url=card.website)
+
+        if normalized_phone:
+            _upsert_contact(db, business=business, channel=ChannelType.PHONE, value=normalized_phone, source_url=card.place_url or None)
+            _upsert_contact(
+                db,
+                business=business,
+                channel=ChannelType.WHATSAPP,
+                value=normalized_phone,
+                source_url=card.place_url or None,
+                whatsapp_likely=True,
+            )
 
         _sync_segment(db, business)
 

@@ -4,9 +4,18 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from app.api.dependencies import get_db
+from app.integrations.discovery.google_maps_web import GoogleMapsWebClient
 from app.integrations.discovery.google_places import GooglePlacesClient
-from app.schemas.domain import BusinessRead, PlacesIngestRequest, PlacesIngestResponse, PlacesMatrixRequest, PlacesMatrixResponse
-from app.services.discovery import ingest_places_payload
+from app.schemas.domain import (
+    BusinessRead,
+    MapsWebIngestRequest,
+    MapsWebMatrixRequest,
+    PlacesIngestRequest,
+    PlacesIngestResponse,
+    PlacesMatrixRequest,
+    PlacesMatrixResponse,
+)
+from app.services.discovery import ingest_maps_web_payload, ingest_places_payload
 from app.services.lead_service import get_business, list_businesses
 
 
@@ -61,4 +70,40 @@ async def ingest_places_matrix(payload: PlacesMatrixRequest, db: Session = Depen
         imported=total_imported,
         updated=total_updated,
         total_places=total_places,
+    )
+
+
+@router.post("/ingest/maps-web", response_model=PlacesIngestResponse)
+async def ingest_maps_web(payload: MapsWebIngestRequest, db: Session = Depends(get_db)) -> PlacesIngestResponse:
+    client = GoogleMapsWebClient()
+    cards = await client.search(text_query=payload.text_query, max_cards=payload.max_cards)
+    imported, updated = ingest_maps_web_payload(db, cards)
+    db.commit()
+    return PlacesIngestResponse(imported=imported, updated=updated, total_places=len(cards))
+
+
+@router.post("/ingest/maps-web/matrix", response_model=PlacesMatrixResponse)
+async def ingest_maps_web_matrix(payload: MapsWebMatrixRequest, db: Session = Depends(get_db)) -> PlacesMatrixResponse:
+    client = GoogleMapsWebClient()
+    total_imported = 0
+    total_updated = 0
+    total_cards = 0
+    queries_run = 0
+
+    for city in payload.cities:
+        for category in payload.categories:
+            text_query = f"{category} {city}"
+            cards = await client.search(text_query=text_query, max_cards=payload.max_cards)
+            imported, updated = ingest_maps_web_payload(db, cards)
+            total_imported += imported
+            total_updated += updated
+            total_cards += len(cards)
+            queries_run += 1
+
+    db.commit()
+    return PlacesMatrixResponse(
+        queries_run=queries_run,
+        imported=total_imported,
+        updated=total_updated,
+        total_places=total_cards,
     )
