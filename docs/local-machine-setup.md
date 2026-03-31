@@ -9,10 +9,18 @@ Run Aperture on your laptop for early validation while keeping it separate from 
 - Aperture has its own project `.env`
 - Aperture has its own OpenClaw config at [openclaw/local/aperture.local.json5](C:\CS\Agency\Aperture\openclaw\local\aperture.local.json5)
 - Aperture has its own OpenClaw state dir at [openclaw/state/local](C:\CS\Agency\Aperture\openclaw\state\local)
+- Aperture has its own OpenClaw workspaces under [openclaw/workspaces](C:\CS\Agency\Aperture\openclaw\workspaces)
 - Aperture has its own startup scripts under [ops/windows](C:\CS\Agency\Aperture\ops\windows)
 
-This keeps the runtime configuration and OpenClaw local state separate from your personal setup.
+This keeps the runtime configuration, agent workspaces, and OpenClaw local state separate from your personal setup.
 The app will read the Aperture OpenClaw config and state dir, not the defaults used by your personal setup.
+
+## How it differs from your personal OpenClaw
+
+- Personal OpenClaw still uses your default home config and state under your user profile.
+- Aperture uses [aperture.local.json5](C:\CS\Agency\Aperture\openclaw\local\aperture.local.json5) and [openclaw/state/local](C:\CS\Agency\Aperture\openclaw\state\local).
+- Aperture agents are named `lead-enrichment`, `contact-discovery`, `site-audit`, `draft-email`, `draft-whatsapp`, and `reply-classifier`.
+- Aperture workspaces live under [openclaw/workspaces](C:\CS\Agency\Aperture\openclaw\workspaces), so you can tell at a glance when you are in the company runtime.
 
 ## Files created for local use
 
@@ -53,6 +61,8 @@ If Aperture has not been logged in yet, run this once first:
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\ops\windows\setup-openclaw.ps1
 ```
+
+That script uses the Aperture-specific config and state dir, runs Codex OAuth, runs the Copilot device login, and then sets `openai-codex/gpt-5.4` as the default model for the company runtime.
 
 Terminal 2:
 

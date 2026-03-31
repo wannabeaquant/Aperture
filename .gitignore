@@ -13,4 +13,5 @@ build/
 backend/.pytest_cache/
 backend/.coverage
 *.sqlite3
+openclaw/state/
 

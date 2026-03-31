@@ -17,5 +17,6 @@ Write-Host ""
 openclaw config file
 openclaw onboard --auth-choice openai-codex
 openclaw models auth login --provider openai-codex
-openclaw models auth login --provider github-copilot
+openclaw models auth login-github-copilot
+openclaw models set openai-codex/gpt-5.4
 openclaw models status --json
