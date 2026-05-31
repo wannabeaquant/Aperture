@@ -1,3 +1,1 @@
-Done. Written to `memory/SESSION_NOTES.md`.
-
-Key call-out in "Watch Next Week": 10+ commits this week were logo/visual tweaks on the website. The backend pipeline (discovery, scoring, outreach) hasn't moved. If Aperture's actual goal is a lead pipeline, next session should hard-redirect to `ops/prospecting/` work.
+Written to memory. Key call-out: Aperture had zero feature commits this week — only docs housekeeping. The pipeline hasn't been run (or runs aren't being logged). That's the one thing to watch next week.
