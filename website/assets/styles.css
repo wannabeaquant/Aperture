@@ -1497,6 +1497,17 @@ textarea {
   opacity: 1;
 }
 
+/* Mono amber tint for multi-color logos that clash when inverted */
+.client-logo-img.mono-tint {
+  filter: brightness(0) invert(1) sepia(1) saturate(5) hue-rotate(5deg) brightness(1.2) contrast(1.1) !important;
+  opacity: 0.85;
+}
+
+.client-logo-img.mono-tint:hover {
+  filter: brightness(0) invert(1) brightness(1.5) drop-shadow(0 0 14px rgba(251, 191, 36, 0.7)) !important;
+  opacity: 1;
+}
+
 /* Custom adjustment to scale and enhance CapxAI logo */
 .client-logo-img.capx-logo-adjust {
   height: 52px;
