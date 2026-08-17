@@ -3,7 +3,6 @@
 ## Goal
 
 Deploy a separate agency runtime for Aperture on one AWS Lightsail VPS.
-This host is distinct from your personal machine and distinct from your personal OpenClaw login.
 
 ## Step 1: Create the Lightsail instance
 
@@ -15,7 +14,7 @@ This host is distinct from your personal machine and distinct from your personal
 6. Pick the smallest bundle you are comfortable with.
 
 Recommended:
-- testing with OpenClaw: `2 GB RAM` bundle
+- testing: `2 GB RAM` bundle
 - absolute minimum: `1 GB RAM`, but expect tighter limits
 
 7. Name the instance `aperture-vps`.
@@ -75,26 +74,7 @@ node --version
 npm --version
 ```
 
-## Step 8: Install OpenClaw
-
-Follow the OpenClaw install path you prefer on the VPS. After install:
-
-```bash
-openclaw --version
-```
-
-Then run the agency auth flows on this host:
-
-```bash
-openclaw onboard --auth-choice openai-codex
-openclaw models auth login --provider openai-codex
-openclaw models auth login --provider github-copilot
-openclaw models status --json
-```
-
-This is where you sign in with the agency runtime, not your personal workstation setup.
-
-## Step 9: Create the PostgreSQL database
+## Step 8: Create the PostgreSQL database
 
 ```bash
 sudo -u postgres psql
@@ -108,7 +88,7 @@ CREATE DATABASE aperture OWNER aperture;
 \q
 ```
 
-## Step 10: Clone the repo
+## Step 9: Clone the repo
 
 ```bash
 cd /opt
@@ -117,7 +97,7 @@ sudo chown -R $USER:$USER /opt/Aperture
 cd /opt/Aperture
 ```
 
-## Step 11: Create the Python environment
+## Step 10: Create the Python environment
 
 ```bash
 cd /opt/Aperture/backend
@@ -127,9 +107,7 @@ pip install --upgrade pip
 pip install -e ..[dev]
 ```
 
-## Step 12: Create `.env`
-
-Copy the example file:
+## Step 11: Create `.env`
 
 ```bash
 cd /opt/Aperture
@@ -138,7 +116,7 @@ cp ops/.env.example .env
 
 Then fill in the provider values. Use the provider setup guide in [provider-setup.md](C:\CS\Agency\Aperture\docs\provider-setup.md).
 
-## Step 13: Run migrations
+## Step 12: Run migrations
 
 ```bash
 cd /opt/Aperture/backend
@@ -146,7 +124,7 @@ source .venv/bin/activate
 alembic upgrade head
 ```
 
-## Step 14: Smoke test the API
+## Step 13: Smoke test the API
 
 ```bash
 cd /opt/Aperture/backend
@@ -160,7 +138,7 @@ From your machine:
 curl http://YOUR_STATIC_IP:8080/health
 ```
 
-## Step 15: Start the worker
+## Step 14: Start the worker
 
 In a second shell:
 
@@ -170,22 +148,16 @@ source .venv/bin/activate
 python -m dramatiq app.workers.tasks
 ```
 
-## Step 16: Make it persistent
+## Step 15: Make it persistent
 
 After the app works manually, add systemd services for:
 - `aperture-api`
 - `aperture-worker`
-- `aperture-openclaw`
-
-The repo already includes a sample OpenClaw service file:
-- [aperture-openclaw.service.example](C:\CS\Agency\Aperture\ops\runtime\aperture-openclaw.service.example)
 
 ## Recommended first smoke tests
 
 1. `GET /health`
-2. `GET /providers/openclaw`
-3. small Places ingest for one city and one category
-4. one enrichment run
-5. one draft generation run
-6. one SES sandbox email send
-7. one Twilio WhatsApp sandbox send
+2. small Places ingest for one city and one category
+3. one enrichment run
+4. one SES sandbox email send
+5. one Twilio WhatsApp sandbox send

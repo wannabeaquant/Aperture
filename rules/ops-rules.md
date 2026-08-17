@@ -2,7 +2,7 @@
 
 ## Local Runtime
 
-- Do not commit `.env`, virtualenvs, caches, generated data, local OpenClaw state, or provider credentials.
+- Do not commit `.env`, virtualenvs, caches, generated data, or provider credentials.
 - Keep `.env.example` and setup docs current when configuration changes.
 - Preserve Windows scripts under `ops/windows/` unless replacing them with documented alternatives.
 

@@ -187,29 +187,6 @@ This is an inference from Twilio's public pricing plus the fact that Meta Cloud 
 The current codebase is wired for Twilio right now, not direct Meta Cloud API.
 If you want cheapest production WhatsApp, the next implementation step should be a `Meta Cloud API` adapter beside the existing Twilio adapter.
 
-## OpenClaw
-
-### Required vars
-
-- `APERTURE_OPENCLAW_COMMAND`
-- `APERTURE_OPENCLAW_CONFIG`
-- `APERTURE_OPENCLAW_HOST_LABEL`
-- workflow agent names, which can usually stay at defaults
-
-### Setup flow
-
-1. Install OpenClaw on the VPS.
-2. Authenticate `openai-codex`.
-3. Authenticate `github-copilot`.
-4. Confirm:
-
-```bash
-openclaw models status --json
-openclaw models status --check
-```
-
-5. Point `APERTURE_OPENCLAW_CONFIG` at the agency config path if you use a non-default config.
-
 ## Safety caps
 
 These should stay low at the start:

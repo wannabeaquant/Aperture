@@ -100,22 +100,6 @@ Current importer sources:
 
 DesignRush category pages are currently Cloudflare-blocked from script fetches, so treat DesignRush as a manual/export or search-backed source for now.
 
-## Optional OpenClaw Enrichment
-
-OpenClaw enrichment is off by default. Website-stage OpenClaw improves the internal scored account rows. Contact-stage OpenClaw improves copy in the same root `outreach.csv` file and marks rows through `ai_enrichment_status`.
-
-```powershell
-python ops\prospecting\build_agency_pipeline.py --query-limit 3 --max-sites 30 --openclaw-top-n 5
-```
-
-Recommended first model route:
-
-- `github-copilot/gpt-5.3-codex` through OpenClaw/Copilot sign-in when available
-- fallback to `openai-codex/gpt-5.2-codex` if Copilot is unavailable or quota-constrained
-- no API-key model by default
-
-Keep `--openclaw-top-n` low until outreach reply quality proves the angle. The agent receives a compact evidence payload and must return strict JSON. It should not browse broadly, invent facts, send messages, or own pipeline state.
-
 ## Manual Review Rules
 
 Before outreach:
@@ -144,20 +128,6 @@ This writes clean manual-review outputs under `data/prospects/`:
 - `review.md`: skim-friendly review file for the top accounts.
 
 Raw contact candidates are kept under `data/prospects/internal/contacts.csv`.
-
-OpenClaw pitch refinement is optional and should stay capped:
-
-```powershell
-python ops\prospecting\enrich_agency_contacts.py --max-accounts 10 --openclaw-top-n 3 --openclaw-command C:\Users\athar\AppData\Roaming\npm\openclaw.cmd
-```
-
-That command still writes to `data/prospects/outreach.csv`; it does not create a separate OpenClaw file.
-
-To refine existing outreach rows without re-running contact discovery:
-
-```powershell
-python ops\prospecting\enrich_agency_contacts.py --refine-existing-outreach --openclaw-top-n 5 --openclaw-command C:\Users\athar\AppData\Roaming\npm\openclaw.cmd
-```
 
 Do not send directly from these files. Use them to manually verify contact identity, source URLs, email deliverability, and final copy.
 

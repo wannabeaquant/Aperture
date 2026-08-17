@@ -7,7 +7,6 @@ from sqlalchemy.orm import Session, joinedload
 from app.core.enums import CampaignChannel
 from app.models.domain import Business, Campaign, CampaignMember, DraftMessage, EvidencePack, SendAttempt, SuppressionEntry
 from app.services.dispatch import dispatch_draft
-from app.services.drafts import generate_draft
 from app.services.evidence import build_basic_evidence_pack
 
 
@@ -98,14 +97,9 @@ def process_campaign(db: Session, campaign: Campaign) -> dict[str, int]:
         evidence = _load_or_create_evidence(db, business)
         draft = _load_existing_draft(db, business.id, campaign.channel, member.sequence_step)
         if draft is None:
-            draft = generate_draft(
-                db,
-                business=business,
-                evidence=evidence,
-                channel=campaign.channel,
-                sequence_step=member.sequence_step,
-                template_version=campaign.template_version,
-            )
+            member.state = "blocked"
+            blocked += 1
+            continue
 
         try:
             attempt = dispatch_draft(business, draft)

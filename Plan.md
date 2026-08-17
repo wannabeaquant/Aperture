@@ -3,7 +3,7 @@
 ## What this repo is
 Two parts in one repo:
 1. **`website/`** — Aperture's public marketing site (HTML/CSS/JS, 4 pages: index, services, process, contact). This is the sales surface for the agency (Sanidhya + Atharva).
-2. **`backend/`, `openclaw/`, `ops/`, `contracts/`** — the B2B agency lead pipeline (FastAPI + Postgres + Redis + Dramatiq + OpenClaw) that powers prospecting and outreach. Unrelated to the website refactor below.
+2. **`backend/`, `ops/`, `contracts/`** — the B2B agency lead pipeline (FastAPI + Postgres + Redis + Dramatiq) that powers prospecting and outreach. Unrelated to the website refactor below.
 
 ## Current session — Website visual refactor (2026-05-17)
 
@@ -55,7 +55,7 @@ Stayed inside the existing vanilla HTML/CSS/JS stack (no framework rewrite). The
 4. `Fix gradient text inside split chars` — CSS fix for `<em>` clip-text after split.
 
 ### Not changed
-- Any backend/ops/openclaw code.
+- Any backend/ops code.
 - Any copy on the site.
 - The 4-page structure or any class names the JS depends on.
 

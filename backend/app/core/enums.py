@@ -63,7 +63,6 @@ class CampaignStatus(str, Enum):
 
 
 class ProviderKind(str, Enum):
-    OPENCLAW = "openclaw"
     SES = "ses"
     TWILIO = "twilio"
 

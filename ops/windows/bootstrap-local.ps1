@@ -53,10 +53,6 @@ if (-not (Test-Path (Join-Path $repoRoot ".env"))) {
     throw "Expected .env at $repoRoot\.env"
 }
 
-if (-not (Test-Path (Join-Path $repoRoot "openclaw\\local\\aperture.local.json5"))) {
-    throw "Expected local OpenClaw config at openclaw\\local\\aperture.local.json5"
-}
-
 Ensure-DockerDesktop
 Invoke-Checked -Description "Starting local Postgres and Redis via Docker..." -Script {
     docker compose -f $dockerComposeFile up -d
@@ -92,4 +88,3 @@ Write-Host "Next steps:"
 Write-Host "1. Fill in provider keys in .env"
 Write-Host "2. Run ops\\windows\\start-api.ps1"
 Write-Host "3. Run ops\\windows\\start-worker.ps1"
-Write-Host "4. Run ops\\windows\\probe-openclaw.ps1"

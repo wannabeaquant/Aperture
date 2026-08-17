@@ -6,20 +6,6 @@
 - PostgreSQL
 - Redis
 - Node 22+
-- `openclaw` installed on the host
-
-## OpenClaw
-
-Run the OpenClaw onboarding flows on the host machine:
-
-```bash
-openclaw onboard --auth-choice openai-codex
-openclaw models auth login --provider openai-codex
-openclaw models auth login --provider github-copilot
-openclaw models status --json
-```
-
-Store the resulting OpenClaw config path in `APERTURE_OPENCLAW_CONFIG` if you keep it outside the default host location.
 
 ## Backend
 

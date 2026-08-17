@@ -30,17 +30,6 @@ class Settings(BaseSettings):
     aws_secret_access_key: str = ""
     aws_session_token: str = ""
 
-    openclaw_command: str = "openclaw"
-    openclaw_config: str = ""
-    openclaw_state_dir: str = ""
-    openclaw_status_timeout_seconds: int = 20
-    openclaw_agent_timeout_seconds: int = 90
-    openclaw_agent_enrichment: str = "lead-enrichment"
-    openclaw_agent_contact_discovery: str = "contact-discovery"
-    openclaw_agent_site_audit: str = "site-audit"
-    openclaw_agent_draft_email: str = "draft-email"
-    openclaw_agent_draft_whatsapp: str = "draft-whatsapp"
-    openclaw_agent_reply_classifier: str = "reply-classifier"
     codex_budget_window_hours: int = 5
     codex_budget_max_runs_per_window: int = 30
     codex_switch_threshold_percent: int = 50
@@ -50,16 +39,6 @@ class Settings(BaseSettings):
     whatsapp_daily_cap: int = 50
     data_dir: Path = Field(default_factory=lambda: Path("data"))
     skip_db_init: bool = False
-    openclaw_host_label: str = "agency-openclaw-vps"
-
-    @property
-    def openclaw_env(self) -> dict[str, str]:
-        env: dict[str, str] = {}
-        if self.openclaw_config:
-            env["OPENCLAW_CONFIG_PATH"] = self.openclaw_config
-        if self.openclaw_state_dir:
-            env["OPENCLAW_STATE_DIR"] = self.openclaw_state_dir
-        return env
 
 
 @lru_cache(maxsize=1)

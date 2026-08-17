@@ -105,17 +105,6 @@ class CampaignRead(BaseModel):
     filters: dict
 
 
-class ProviderStatusRead(BaseModel):
-    model_config = ConfigDict(from_attributes=True)
-
-    provider_name: str
-    health: ProviderHealth
-    default_model: str | None
-    last_probe_at: datetime | None
-    last_error: str | None
-    status_payload: dict
-
-
 class ContactPointRead(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 

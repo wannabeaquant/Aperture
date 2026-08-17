@@ -3,8 +3,8 @@
 ## Before Editing
 
 - Read the files you will modify and adjacent code paths.
-- Preserve established patterns in `backend/app`, `openclaw`, `ops`, and `website`.
-- Check applicable nested `AGENTS.md` files before editing under `openclaw/workspaces/**`.
+- Preserve established patterns in `backend/app`, `ops`, and `website`.
+- Check applicable nested `AGENTS.md` files before editing under `ops/**`.
 
 ## During Editing
 

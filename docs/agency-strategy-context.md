@@ -91,8 +91,7 @@ Tracked workflow files:
 
 Generated local files are intentionally ignored under `data/prospects/`.
 The operator-facing files are `data/prospects/outreach.csv`, `data/prospects/review.md`, and `data/prospects/sources.csv`; internal stage files live under `data/prospects/internal/`.
-Source collection and contact enrichment append and dedupe by default. Contact-stage OpenClaw writes refined copy back into `outreach.csv` and marks rows with `ai_enrichment_status`.
-Website research skips domains already present in `outreach.csv` or `data/prospects/internal/pipeline.csv` by default.
+Source collection and contact enrichment append and dedupe by default. Website research skips domains already present in `outreach.csv` or `data/prospects/internal/pipeline.csv` by default.
 
 Regenerate prospects with:
 
@@ -123,16 +122,6 @@ The pipeline is not agent-owned. Python owns:
 - deterministic scoring
 - approval-batch state
 
-OpenClaw owns optional top-lead enrichment only:
-
-- summarize observed evidence
-- identify the likely workflow pain
-- recommend the first outreach angle
-- flag risks or uncertainty
-- return strict JSON
-
-OpenClaw is disabled by default. Use `--openclaw-top-n 5` only after the deterministic list is already scored.
-
 Search is opportunistic, not the only source. Public search engines can throttle HTML results, so the startup pipeline must keep working from the built-in seed list and CSV imports. Add paid search/data APIs only after the first reply or pilot signal justifies spend.
 
 Preferred discovery source order:
@@ -146,11 +135,8 @@ Preferred discovery source order:
 
 Recommended startup route:
 
-- Use the existing OpenClaw setup if Copilot and Codex are already authenticated locally.
-- Prefer Copilot `gpt-5.3-codex` as the default enrichment route and keep Codex `gpt-5.2-codex` as the cheaper fallback.
 - Keep enrichment payloads compact.
 - Do not use unofficial ChatGPT web automation to bypass product/API boundaries.
-- Do not add Hermes for v1 unless OpenClaw fails in practice.
 
 ## Sending Rules
 
@@ -180,7 +166,6 @@ Useful infrastructure:
 - draft generation
 - campaign state
 - suppression, send caps, and reply classification
-- OpenClaw separation for enrichment/drafting/classification
 
 Needed product pivot:
 

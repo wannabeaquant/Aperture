@@ -10,21 +10,12 @@ from app.integrations.discovery.google_places import GooglePlacesClient
 from app.models.domain import Business, Campaign
 from app.services.campaigns import materialize_campaign_members
 from app.services.discovery import ingest_maps_web_payload, ingest_maps_web_payload_detailed, ingest_places_payload, ingest_places_payload_detailed
-from app.services.drafts import generate_initial_draft_for_routing
 from app.services.evidence import build_basic_evidence_pack
 from app.services.scoring import compute_score
 from app.services.discovery import enrich_business_by_id
-from app.services.provider_health import sync_openclaw_health
 
 
 cli = typer.Typer(help="Aperture management CLI")
-
-
-@cli.command("sync-openclaw")
-def sync_openclaw() -> None:
-    with session_scope() as db:
-        account = sync_openclaw_health(db)
-        typer.echo(f"{account.provider_name}: {account.health.value} ({account.default_model or 'n/a'})")
 
 
 @cli.command("ingest-places")
@@ -58,7 +49,6 @@ def ingest_maps_web_pipeline(text_query: str, max_cards: int = 10, template_vers
         cards = await client.search(text_query=text_query, max_cards=max_cards)
         with session_scope() as db:
             outcome = ingest_maps_web_payload_detailed(db, cards)
-            drafted = 0
             for business_id in outcome.business_ids:
                 await enrich_business_by_id(db, business_id)
                 business = (
@@ -69,11 +59,8 @@ def ingest_maps_web_pipeline(text_query: str, max_cards: int = 10, template_vers
                 compute_score(db, business)
                 evidence = build_basic_evidence_pack(db, business)
                 db.refresh(business)
-                draft = generate_initial_draft_for_routing(db, business=business, evidence=evidence, template_version=template_version)
-                if draft is not None:
-                    drafted += 1
             typer.echo(
-                f"Imported={outcome.imported} Updated={outcome.updated} Cards={len(cards)} Businesses={len(outcome.business_ids)} Drafted={drafted}"
+                f"Imported={outcome.imported} Updated={outcome.updated} Cards={len(cards)} Businesses={len(outcome.business_ids)}"
             )
 
     asyncio.run(_run())
@@ -133,7 +120,6 @@ def ingest_maps_web_pipeline_matrix(cities: str, categories: str, max_cards: int
         client = GoogleMapsWebClient()
         total_imported = 0
         total_updated = 0
-        total_drafted = 0
         total_businesses = 0
         for city in city_list:
             for category in category_list:
@@ -141,30 +127,20 @@ def ingest_maps_web_pipeline_matrix(cities: str, categories: str, max_cards: int
                 cards = await client.search(text_query=text_query, max_cards=max_cards)
                 with session_scope() as db:
                     outcome = ingest_maps_web_payload_detailed(db, cards)
-                    drafted = 0
                     for business_id in outcome.business_ids:
                         await enrich_business_by_id(db, business_id)
                         business = db.query(Business).filter(Business.id == business_id).one()
                         compute_score(db, business)
                         evidence = build_basic_evidence_pack(db, business)
                         db.refresh(business)
-                        draft = generate_initial_draft_for_routing(
-                            db,
-                            business=business,
-                            evidence=evidence,
-                            template_version=template_version,
-                        )
-                        if draft is not None:
-                            drafted += 1
                     total_imported += outcome.imported
                     total_updated += outcome.updated
                     total_businesses += len(outcome.business_ids)
-                    total_drafted += drafted
-                typer.echo(
-                    f"{text_query}: imported={outcome.imported} updated={outcome.updated} businesses={len(outcome.business_ids)} drafted={drafted}"
-                )
+                    typer.echo(
+                        f"{text_query}: imported={outcome.imported} updated={outcome.updated} businesses={len(outcome.business_ids)}"
+                    )
         typer.echo(
-            f"Total imported={total_imported} updated={total_updated} businesses={total_businesses} drafted={total_drafted}"
+            f"Total imported={total_imported} updated={total_updated} businesses={total_businesses}"
         )
 
     asyncio.run(_run())
