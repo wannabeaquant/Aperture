@@ -2059,3 +2059,233 @@ textarea {
   .clients-grid { grid-template-columns: 1fr; }
   .clients-stats { flex-wrap: wrap; gap: 32px; }
 }
+
+/* ---------- Aperture Ops product pages ---------- */
+
+@media (max-width: 760px) {
+  .product-home .bottom-bar { display: none; }
+}
+
+.ops-home-preview {
+  padding-top: 36px;
+}
+
+.ops-home-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+  gap: 44px;
+  align-items: center;
+}
+
+.ops-home-image {
+  display: block;
+  overflow: hidden;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-lg);
+  background: #08100d;
+  box-shadow: var(--shadow);
+}
+
+.ops-home-image img {
+  width: 100%;
+  height: auto;
+}
+
+.ops-home-copy {
+  display: grid;
+  justify-items: start;
+  gap: 18px;
+}
+
+.ops-home-copy h3,
+.ops-company-card h2 {
+  margin: 0;
+  font-family: "Instrument Serif", serif;
+  font-weight: 400;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  line-height: 1.02;
+}
+
+.ops-home-copy p,
+.ops-company-card p {
+  margin: 0;
+  color: var(--text-dim);
+  line-height: 1.75;
+}
+
+.ops-kicker,
+.ops-card-index,
+.ops-proof-strip span,
+.ops-founder-list article > span {
+  color: var(--accent-2);
+  font: 500 0.72rem/1.4 "JetBrains Mono", monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.ops-proof-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 10px;
+  color: var(--text-dim);
+  line-height: 1.55;
+}
+
+.ops-proof-list li::before {
+  content: "•";
+  margin-right: 10px;
+  color: var(--accent-2);
+}
+
+.ops-hero {
+  background:
+    radial-gradient(ellipse 65% 65% at 85% 20%, rgba(16, 185, 129, 0.12), transparent 65%),
+    radial-gradient(ellipse 65% 65% at 15% 70%, rgba(245, 158, 11, 0.12), transparent 70%);
+}
+
+.ops-proof-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.025);
+  overflow: hidden;
+}
+
+.ops-proof-strip > div {
+  display: grid;
+  gap: 10px;
+  padding: 26px 30px;
+}
+
+.ops-proof-strip > div + div {
+  border-left: 1px solid var(--line);
+}
+
+.ops-proof-strip strong {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.ops-capability-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.ops-capability-grid .service-card {
+  min-height: 220px;
+}
+
+.ops-capability-grid .service-card h3 {
+  margin-top: 20px;
+}
+
+.ops-product-views figure {
+  margin: 0 auto 32px;
+}
+
+.ops-screenshot {
+  overflow: hidden;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-lg);
+  background: #08100d;
+  box-shadow: var(--shadow);
+}
+
+.ops-screenshot img {
+  width: 100%;
+  height: auto;
+}
+
+.ops-screenshot-wide {
+  max-width: 1040px;
+}
+
+.ops-screenshot-narrow {
+  max-width: 900px;
+}
+
+.ops-company-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+  gap: 48px;
+  padding: clamp(28px, 6vw, 64px);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(145deg, rgba(24, 24, 27, 0.82), rgba(16, 16, 20, 0.72));
+}
+
+.ops-company-card h2 {
+  margin: 18px 0;
+}
+
+.ops-founder-list {
+  display: grid;
+  align-content: center;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.ops-founder-list article {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.ops-founder-list article strong {
+  line-height: 1.4;
+}
+
+.ops-founder-list a,
+.ops-company-email {
+  color: var(--text-dim);
+  font-size: 0.88rem;
+  border-bottom: 1px solid rgba(245, 158, 11, 0.3);
+  width: max-content;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.ops-founder-list a:hover,
+.ops-company-email:hover {
+  color: var(--text);
+}
+
+@media (max-width: 900px) {
+  .ops-home-grid,
+  .ops-company-card {
+    grid-template-columns: 1fr;
+  }
+
+  .ops-home-copy {
+    max-width: 650px;
+  }
+}
+
+@media (max-width: 640px) {
+  .ops-proof-strip,
+  .ops-capability-grid,
+  .ops-founder-list {
+    grid-template-columns: 1fr;
+  }
+
+  .ops-proof-strip > div + div {
+    border-top: 1px solid var(--line);
+    border-left: 0;
+  }
+
+  .ops-proof-strip > div {
+    padding: 20px 22px;
+  }
+
+  .ops-capability-grid .service-card {
+    min-height: auto;
+  }
+}

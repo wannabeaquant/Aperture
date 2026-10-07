@@ -315,7 +315,7 @@ document.querySelectorAll("[data-contact-form]").forEach((form) => {
     } catch (error) {
       if (statusNode) {
         statusNode.textContent =
-          error instanceof Error ? error.message : "Unable to send inquiry. Email us at aperturecmservice@gmail.com.";
+          error instanceof Error ? error.message : "Unable to send inquiry. Email us at info@aperturecm.in.";
         statusNode.className = "form-status error";
       }
     } finally {
