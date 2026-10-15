@@ -285,3 +285,4 @@ html { overflow-x: clip; }
 .aigtm { font-family: Georgia, 'Times New Roman', serif; font-size: min(30px, 11cqw); white-space: nowrap; letter-spacing: -.01em; }
 .aigtm b { font-weight: 700; } .aigtm i { font-style: italic; font-weight: 600; margin-left: 1px; }
 .logos img.lg-dark[src$="interioarty.png"] { max-height: 58px; }
+.logos img.lg-livedelite { max-height: 60px; max-width: 80%; }

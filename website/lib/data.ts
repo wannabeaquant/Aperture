@@ -94,6 +94,7 @@ export const clients: Client[] = [
     line: 'An AI front desk for Instagram, WhatsApp and phone enquiries, with every lead kept in one place.',
     body: 'LiveDelite Interiors receives enquiries across Instagram DMs, WhatsApp and inbound calls. We built one AI system that answers on all three channels at any hour, records every lead in a single list, and hands the conversation to the team whenever a person is needed.',
     built: ['Instagram DM, WhatsApp and call automation', 'One central lead list', 'Human handover'],
+    logo: '/logos/livedelite.png', logoClass: 'lg-livedelite',
   },
   {
     slug: 'aigtm-channel', no: '13', name: 'AIGTM Channel', sector: 'MULTI-AGENT SYSTEM', bg: '#1C3DFF', fg: '#FFFFFF',
@@ -101,6 +102,12 @@ export const clients: Client[] = [
     body: 'For AIGTM Channel we built a multi-agent system that automates their outbound email campaigns from start to finish and qualifies the leads that respond, along with the other follow-up work around it.',
     built: ['Multi-agent system', 'Outbound email campaign automation', 'Lead qualification', 'And more around the campaign workflow'],
     wordmark: 'aigtm',
+  },
+  {
+    slug: 'vellar', no: '14', name: 'Vellar', sector: 'FASHION / E-COMMERCE', bg: '#0A0A0A', fg: '#FFFFFF',
+    line: 'The complete website for a clothing brand, with the payment gateway built in.',
+    body: 'Vellar is a clothing brand, and we built its entire website, from the brand storefront to the way customers pay. The payment gateway is integrated, so a visitor can go from browsing to buying without leaving the site.',
+    built: ['Complete clothing-brand website', 'Payment gateway integration'],
   },
 ];
 
@@ -146,7 +153,7 @@ export const chunks: Chunk[] = [
   { id: 'zero', title: 'CapxAI', href: '/work/zero-capxai', keys: 'zero capx capxai agents multi agent mainnet token crypto zero person company', text: 'We built the complete mainnet product for CapxAI’s ZERO: the agent workspace, task orchestration, persistent outputs, integrations and controls. It reached a $40M peak market cap and 15K token holders.' },
   { id: 'arty', title: 'InterioArty', href: '/work/interioarty', keys: 'interioarty arty chatbot lead qualification whatsapp interior pune', text: 'Arty is a website assistant for a Pune interior studio. It answers from approved studio facts, qualifies the lead, and hands it to the team on WhatsApp through a simple inbox.' },
   { id: 'pri', title: 'PriBhum Nest', href: '/work/pribhum-nest', keys: 'pribhum pg property real estate app mobile students owners kyc supabase', text: 'A PG platform for owners and students with a mobile app, an admin panel and a Supabase backend, covering listings, enquiries, onboarding, bed availability, KYC, rewards and owner analytics.' },
-  { id: 'more', title: 'More work', href: '/work', keys: 'clients other firstqa rsvd luminar roccs owasp ch plus livedelite aigtm outbound email fintech education trading', text: 'We have also built for FirstQA, RSVD Capital, Luminar Fintech, ROCCS’ Academy, OWASP, CH Plus Partners, LiveDelite Interiors and AIGTM Channel, whose outbound email campaigns and lead qualification now run on a multi-agent system we built. Each has its own page under Work.' },
+  { id: 'more', title: 'More work', href: '/work', keys: 'clients other firstqa rsvd luminar roccs owasp ch plus livedelite aigtm outbound email fintech education trading', text: 'We have also built for FirstQA, RSVD Capital, Luminar Fintech, ROCCS’ Academy, OWASP, CH Plus Partners, LiveDelite Interiors, Vellar (a clothing brand whose website and payment gateway we built) and AIGTM Channel, whose outbound email campaigns and lead qualification now run on a multi-agent system we built. Each has its own page under Work.' },
   { id: 'proc', title: 'How we work', href: '/studio', keys: 'process how work scope timeline handover honest', text: 'We map the real workflow first, get a working version to you early, stay through launch and training, and report honestly on what works and what is still being measured.' },
   { id: 'agency', title: 'For agencies', href: '/studio', keys: 'agency partner white label resell gtm subcontract', text: 'If you hold the client relationship and need a team to build the automation or software behind it, that is something we do. The way the engagement is packaged, including white-label delivery, is agreed on a call.' },
   { id: 'contact', title: 'Contact', href: '/contact', keys: 'contact email book call reach hire price pricing cost quote', text: 'The fastest way is WhatsApp or a call: Atharva Singh on +91 99900 52074 and Sanidhya Shishodia on +91 93683 22072. You can also email atharvasingh0405@gmail.com or shishodiasanidhya@gmail.com. We do not publish pricing, so ask us directly.' },
