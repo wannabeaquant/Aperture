@@ -1,9 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
-  "buildCommand": null,
   "installCommand": null,
-  "outputDirectory": "website",
-  "cleanUrls": true,
-  "trailingSlash": false
+  "buildCommand": "echo 'The site is now a Next.js app in website/. In Vercel Project Settings > General, set Root Directory to website, then redeploy.' && exit 1",
+  "outputDirectory": "website"
 }
