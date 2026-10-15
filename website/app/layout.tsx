@@ -14,6 +14,13 @@ const mono = IBM_Plex_Mono({ subsets: ['latin'], variable: '--font-mono', weight
 export const metadata: Metadata = {
   metadataBase: new URL('https://aperturecm.in'),
   title: { default: 'Aperture. AI systems that work.', template: '%s / Aperture' },
+  icons: {
+    icon: [
+      { url: '/icon-light.png', type: 'image/png', sizes: '256x256', media: '(prefers-color-scheme: light)' },
+      { url: '/icon-dark.png', type: 'image/png', sizes: '256x256', media: '(prefers-color-scheme: dark)' },
+    ],
+    apple: [{ url: '/apple-icon.png', sizes: '180x180', type: 'image/png' }],
+  },
   description: 'Aperture builds voice agents, AI automation, operating software and apps for agencies, BPOs and product teams. Two founders, both on the work.',
 };
 
