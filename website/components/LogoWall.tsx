@@ -7,7 +7,7 @@ export default function LogoWall() {
     <div className="logos">
       {clients.map((c) => (
         <Link key={c.slug} href={`/work/${c.slug}`} data-cur="OPEN" aria-label={c.name}>
-          {c.logo ? <img src={c.logo} alt={c.name} loading="lazy" className={c.logoClass} /> : <span className="wordmark">{c.name}</span>}
+          {c.wordmark === 'aigtm' ? <span className="aigtm" aria-label={c.name}><b>AIGTM</b><i>Channel</i></span> : c.logo ? (<span className="lg-pair"><img src={c.logo} alt={c.name} loading="lazy" className={c.logoClass} />{c.logoText && <b className="lg-text">{c.logoText}</b>}</span>) : <span className="wordmark">{c.name}</span>}
         </Link>
       ))}
     </div>

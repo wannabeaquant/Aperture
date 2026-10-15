@@ -3,7 +3,7 @@
 export type Client = {
   slug: string; no: string; name: string; sector: string; bg: string; fg: string;
   line: string; body: string; built: string[]; facts?: string[]; footnote?: string;
-  logo?: string; logoClass?: string;
+  logo?: string; logoClass?: string; logoText?: string; wordmark?: 'aigtm';
 };
 
 export const clients: Client[] = [
@@ -38,6 +38,7 @@ export const clients: Client[] = [
     body: 'InterioArty is an interior studio in Pune. Arty lives on its website, answers visitors using only facts the studio has approved, collects the brief as the conversation goes, and hands the lead to the team on WhatsApp. Everything lands in a simple inbox the team can work through.',
     built: ['Website assistant with memory', 'Lead qualification', 'WhatsApp handoff', 'Three-stage lead inbox', 'One-line embed'],
     facts: ['About 130ms to first token'],
+    logo: '/logos/interioarty.png', logoClass: 'lg-dark',
   },
   {
     slug: 'pribhum-nest', no: '05', name: 'PriBhum Nest', sector: 'PROPERTY', bg: '#E9E9E9', fg: '#0A0A0A',
@@ -79,12 +80,14 @@ export const clients: Client[] = [
     line: 'Chapter sites, a security resource hub and event registration for a global nonprofit.',
     body: 'For OWASP we built the web pieces a global volunteer community relies on: landing pages for chapters, a hub for security resources, an event registration system and the documentation infrastructure behind it.',
     built: ['Chapter landing pages', 'Security resource hub', 'Event registration system', 'Documentation infrastructure'],
+    logo: '/logos/owasp.svg', logoClass: 'lg-owasp', logoText: 'OWASP',
   },
   {
     slug: 'ch-plus-partners', no: '11', name: 'CH Plus Partners', sector: 'INTERIORS / HYDERABAD', bg: '#FF5A00', fg: '#0A0A0A',
     line: 'A scroll-driven 3D website that takes visitors from an empty plot to a finished villa.',
     body: 'CH Plus Partners designs and builds residential interiors in Hyderabad. We created their website as one continuous scroll that moves from plot to structure to finished villa, so prospective clients see how a project comes together before they get in touch.',
     built: ['Scroll-driven 3D website', 'Plot-to-villa walkthrough sequence', 'Project gallery', 'Enquiry and contact flow'],
+    logo: '/logos/chplus.png', logoClass: 'lg-chplus',
   },
   {
     slug: 'livedelite-interiors', no: '12', name: 'LiveDelite Interiors', sector: 'INTERIORS / AI AUTOMATION', bg: '#F4E000', fg: '#0A0A0A',
@@ -97,6 +100,7 @@ export const clients: Client[] = [
     line: 'A multi-agent system that runs their outbound email campaigns and qualifies the leads that come back.',
     body: 'For AIGTM Channel we built a multi-agent system that automates their outbound email campaigns from start to finish and qualifies the leads that respond, along with the other follow-up work around it.',
     built: ['Multi-agent system', 'Outbound email campaign automation', 'Lead qualification', 'And more around the campaign workflow'],
+    wordmark: 'aigtm',
   },
 ];
 
