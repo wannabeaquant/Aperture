@@ -1,6 +1,6 @@
 # Aperture
 
-Aperture is a low-cost B2B agency lead pipeline for selling practical AI workflow implementation to international agencies.
+Aperture is a B2B agency lead pipeline for selling practical AI workflow implementation to international agencies.
 
 The first motion is simple:
 
