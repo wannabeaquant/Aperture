@@ -8,7 +8,7 @@ const WANTS_HUMAN = /price|pricing|cost|quote|budget|hire|talk|call|whatsapp|con
 
 type Src = { n: number; id: string; title: string; href: string; text: string };
 type Msg = { from: 'you' | 'bot'; text?: string; answer?: string | null; sources?: Src[]; cta?: boolean; pending?: boolean };
-const starters = ['What do you build?', 'Have you built voice agents?', 'How do you work with agencies?', 'How do I reach the founders?'];
+const starters = ['What do you build?', 'Have you built voice agents?', 'How fast can you ship?', 'How do I reach the founders?'];
 
 /** Turns [1] [2] markers in the AI answer into small links to the page each claim came from. */
 function Cited({ text, sources }: { text: string; sources: Src[] }) {
@@ -43,7 +43,7 @@ export default function Concierge() {
       const r = await fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: history }) });
       const d = await r.json();
       bot = d.answer || d.sources?.length
-        ? { from: 'bot', answer: d.answer, sources: d.sources || [], cta: cta || (d.answer && !d.sources?.length) }
+        ? { from: 'bot', answer: d.answer, sources: d.sources || [], cta: cta || !!d.human }
         : { from: 'bot', text: 'That is not covered on this site, so I will not guess. The founders can answer it directly.', cta: true };
     } catch {
       bot = { from: 'bot', text: 'Something went wrong on our side. You can reach the founders directly below.', cta: true };
@@ -54,7 +54,7 @@ export default function Concierge() {
   return (
     <>
       <button className={`ask-fab ${open ? 'hide' : ''}`} onClick={() => setOpen(true)} aria-label="Open Ask Aperture"><span className="dot" />Ask Aperture</button>
-      <section className={`ask ${open ? 'open' : ''}`} aria-label="Ask Aperture" aria-hidden={!open}>
+      <section className={`ask ${open ? 'open' : ''}`} aria-label="Ask Aperture" aria-hidden={!open} data-lenis-prevent>
         <header>
           <div><p className="mono">Ask Aperture</p><p className="mono">AI answers drawn from this site, with sources. Not a person.</p></div>
           <button onClick={() => setOpen(false)} aria-label="Close">✕</button>

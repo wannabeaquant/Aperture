@@ -302,3 +302,7 @@ html { overflow-x: clip; }
 .thinking { opacity: .6; animation: blink 1s ease-in-out infinite alternate; }
 @keyframes blink { from { opacity: .3; } to { opacity: .8; } }
 .ask form button[disabled] { opacity: .5; }
+
+/* scrolling inside the open chat or search box must not scroll the page behind it */
+.ask-body, .pal ul { overscroll-behavior: contain; }
+html:has(dialog[open]) { overflow: hidden; }

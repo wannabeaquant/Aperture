@@ -42,7 +42,7 @@ export default function Palette() {
   const go = (h: string) => { setOpen(false); if (h.startsWith('mailto')) location.href = h; else router.push(h); };
 
   return (
-    <dialog ref={ref} className="pal" onClose={() => setOpen(false)} onClick={(e) => { if (e.target === ref.current) setOpen(false); }}>
+    <dialog ref={ref} className="pal" data-lenis-prevent onClose={() => setOpen(false)} onClick={(e) => { if (e.target === ref.current) setOpen(false); }}>
       <input autoFocus placeholder="Jump to a page, a case study, a founder" value={q} aria-label="Search"
         onChange={(e) => { setQ(e.target.value); setI(0); }}
         onKeyDown={(e) => {
