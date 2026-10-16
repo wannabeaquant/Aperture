@@ -14,7 +14,7 @@ export default function Services() {
         <Fit as="h1" now className="mega" max={260} lines={['"SERVICES"']} />
       </div>
       <Tape />
-      <div className="cat">
+      <div className="cat full">
         {services.map((s) => (
           <div className="item" key={s.n} style={{ minHeight: 300 }}>
             <span className="n">{s.n}</span>
