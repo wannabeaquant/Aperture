@@ -64,7 +64,7 @@ export default function Intake() {
           <div className="chips">{quick.map((q) => (<button type="button" key={q} aria-pressed={picked.includes(q)} onClick={() => toggle(q)}>{q}</button>))}</div>
           <label><span className="mono">Or say it in your own words (optional)</span>
             <input value={text} onChange={(e) => setText(e.target.value)} placeholder="For example: we answer the same customer questions on WhatsApp all day" maxLength={300} /></label>
-          <button className="btn k" style={{ justifySelf: 'start' }} disabled={busy || (!picked.length && text.trim().length < 3)} onClick={next} data-cur="NEXT">{busy ? 'Reading…' : 'Next'} →</button>
+          <button className="btn k" style={{ justifySelf: 'start' }} disabled={busy || (!picked.length && text.trim().length < 3)} onClick={next} data-cur="NEXT">{busy ? 'Reading…' : 'Next'} ︎</button>
         </>
       )}
 
@@ -77,7 +77,7 @@ export default function Intake() {
             <label><span className="mono">{assist.question} (optional)</span><input value={extra} onChange={(e) => setExtra(e.target.value)} maxLength={200} /></label>
           )}
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-            <button className="btn k" onClick={() => setStep('reach')} data-cur="YES">That is right →</button>
+            <button className="btn k" onClick={() => setStep('reach')} data-cur="YES">That is right ︎</button>
             <button className="btn" onClick={() => setStep('need')}>Change it</button>
           </div>
         </>
@@ -92,7 +92,7 @@ export default function Intake() {
             <input value={name} onChange={(e) => setName(e.target.value)} autoComplete="organization" maxLength={80} /></label>
           <input className="hp" tabIndex={-1} autoComplete="off" aria-hidden value={hp} onChange={(e) => setHp(e.target.value)} name="website" />
           {err && <p className="mono" style={{ color: '#c00' }}>{err}</p>}
-          <button className="btn or" style={{ justifySelf: 'start' }} disabled={busy} data-cur="SEND">{busy ? 'Sending…' : 'Send to the founders'} ↗</button>
+          <button className="btn or" style={{ justifySelf: 'start' }} disabled={busy} data-cur="SEND">{busy ? 'Sending…' : 'Send to the founders'} ︎</button>
           <p className="mono fine">We use these details only to reply to you. Write to us any time to have them deleted.</p>
         </form>
       )}
@@ -102,7 +102,7 @@ export default function Intake() {
           <h2 className="sm q">Sent. A founder will reply.</h2>
           <p>Your brief has gone to both of us. If you would rather not wait, message one of us now.</p>
           <div className="chips">
-            {founders.map((f) => (<a key={f.name} className="btn" href={waLink(f.phone, brief())} target="_blank" rel="noreferrer">WhatsApp {f.name.split(' ')[0]} ↗</a>))}
+            {founders.map((f) => (<a key={f.name} className="btn" href={waLink(f.phone, brief())} target="_blank" rel="noreferrer">WhatsApp {f.name.split(' ')[0]} ︎</a>))}
           </div>
         </>
       )}
@@ -112,7 +112,7 @@ export default function Intake() {
           <h2 className="sm q">One tap and it is with us</h2>
           <p>We could not send that automatically, so it is ready in WhatsApp for you. Pick either of us.</p>
           <div className="chips">
-            {founders.map((f) => (<a key={f.name} className="btn k" href={waLink(f.phone, brief())} target="_blank" rel="noreferrer">WhatsApp {f.name.split(' ')[0]} ↗</a>))}
+            {founders.map((f) => (<a key={f.name} className="btn k" href={waLink(f.phone, brief())} target="_blank" rel="noreferrer">WhatsApp {f.name.split(' ')[0]} ︎</a>))}
           </div>
         </>
       )}

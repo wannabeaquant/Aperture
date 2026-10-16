@@ -25,7 +25,7 @@ export default function Contact() {
             <p className="mono">{f.name}</p>
             <a className="tel" href={`tel:+${f.phone}`} data-cur="CALL">{f.phoneShow}</a>
             <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-              <a className="btn k" href={waLink(f.phone, starter)} target="_blank" rel="noreferrer" data-cur="CHAT">WhatsApp ↗</a>
+              <a className="btn k" href={waLink(f.phone, starter)} target="_blank" rel="noreferrer" data-cur="CHAT">WhatsApp ︎</a>
               <a className="btn" href={`tel:+${f.phone}`}>Call</a>
             </div>
           </div>
@@ -38,7 +38,7 @@ export default function Contact() {
           {booking && (
             <a href={booking} target="_blank" rel="noreferrer" className="wa-card" style={{ background: 'var(--bl)', color: '#fff' }} data-cur="BOOK">
               <p className="mono">PREFER A TIME THAT SUITS YOU?</p>
-              <p className="big" style={{ fontSize: 'clamp(30px,3.4vw,52px)' }}>BOOK 15 MINUTES ↗</p>
+              <p className="big" style={{ fontSize: 'clamp(30px,3.4vw,52px)' }}>BOOK 15 MINUTES ︎</p>
             </a>
           )}
           <div style={{ border: '3px solid var(--k)', padding: 22 }}>

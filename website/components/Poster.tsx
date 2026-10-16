@@ -12,7 +12,7 @@ export default function Poster({ c, span, tie = false, compact = false }: { c: C
       <Link href={`/work/${c.slug}`} className={`poster ${compact ? 'compact' : ''}`} data-cur="OPEN" style={{ background: c.bg, color: c.fg, height: '100%' }}>
         <div className="p-top">
           <span className="mono">{c.no} / {c.sector}</span>
-          <span className="p-arrow">↗</span>
+          <span className="p-arrow">︎</span>
         </div>
         {tie && <ZipTie style={{ position: 'absolute', right: -14, top: '30%', transform: 'rotate(-18deg)' }} />}
         <Fit className="num" lines={nameLines(c.name)} max={compact ? 120 : 190} now />

@@ -25,7 +25,7 @@ export default async function Client({ params }: { params: Promise<{ slug: strin
   return (
     <>
       <section style={{ background: c.bg, color: c.fg, borderBottom: '2px solid var(--k)' }}>
-        <div className="fig mono" style={{ borderColor: c.fg }}><Link href="/work">← ALL WORK</Link><span>{c.no} / {c.sector}</span></div>
+        <div className="fig mono" style={{ borderColor: c.fg }}><Link href="/work">︎ ALL WORK</Link><span>{c.no} / {c.sector}</span></div>
         <div style={{ padding: 'clamp(28px,5vw,72px) var(--pad) clamp(28px,4vw,56px)' }}>
           <Fit as="h1" now className="mega" max={230} lines={nameLines(c.name)} />
         </div>

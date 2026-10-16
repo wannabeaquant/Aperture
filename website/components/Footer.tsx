@@ -15,8 +15,8 @@ export default function Footer() {
               <p className="mono" style={{ opacity: 0.55, marginBottom: 8 }}>{f.name}</p>
               <a className="sm" style={{ textTransform: 'none', letterSpacing: '-.01em', borderBottom: '2px solid var(--or)', display: 'inline-block' }} href={`tel:+${f.phone}`}>{f.phoneShow}</a>
               <div className="mono" style={{ display: 'flex', gap: 18, marginTop: 12 }}>
-                <a href={`https://wa.me/${f.phone}`} target="_blank" rel="noreferrer">WHATSAPP ↗</a>
-                <a href={`mailto:${f.email}`}>EMAIL ↗</a>
+                <a href={`https://wa.me/${f.phone}`} target="_blank" rel="noreferrer">WHATSAPP ︎</a>
+                <a href={`mailto:${f.email}`}>EMAIL ︎</a>
               </div>
             </div>
           ))}

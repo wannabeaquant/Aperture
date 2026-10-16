@@ -21,7 +21,7 @@ export default function Services() {
             <div><p className="sm" style={{ marginBottom: 8 }}>{s.t}</p><p className="d">{s.d}</p></div>
           </div>
         ))}
-        <Link href="/contact" className="item" style={{ background: 'var(--or)', minHeight: 300 }} data-cur="BOOK"><span className="n">+</span><p className="sm">SOMETHING ELSE?<br />TELL US ↗</p></Link>
+        <Link href="/contact" className="item" style={{ background: 'var(--or)', minHeight: 300 }} data-cur="BOOK"><span className="n">+</span><p className="sm">SOMETHING ELSE?<br />TELL US ︎</p></Link>
       </div>
     </>
   );
