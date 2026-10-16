@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Arr from '@/components/Arr';
 import Barcode from '@/components/Barcode';
 import LogoWall from '@/components/LogoWall';
 import Poster from '@/components/Poster';
@@ -30,11 +31,11 @@ export default function Home() {
 
         <div className="hero-foot">
           <ul className="mono hero-list">
-            {['VOICE AGENTS', 'AI WORKFLOWS', 'OPERATING SOFTWARE', 'APPS AND WEBSITES'].map((t, i) => (<li key={t}><span>0{i + 1}</span> ︎ {t}</li>))}
+            {['VOICE AGENTS', 'AI WORKFLOWS', 'OPERATING SOFTWARE', 'APPS AND WEBSITES'].map((t, i) => (<li key={t}><span>0{i + 1}</span> <Arr d="r" /> {t}</li>))}
           </ul>
           <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
-            <Link href="/work" className="btn k" data-cur="SEE">See the work ︎</Link>
-            <Link href="/contact" className="btn or" data-cur="BOOK">Talk to us ︎</Link>
+            <Link href="/work" className="btn k" data-cur="SEE">See the work <Arr d="se" /></Link>
+            <Link href="/contact" className="btn or" data-cur="BOOK">Talk to us <Arr d="ne" /></Link>
           </div>
           <div className="hero-bc"><Barcode seed={21} /><p className="mono" style={{ marginTop: 6 }}>TWO FOUNDERS, BOTH ON THE WORK</p></div>
         </div>
@@ -51,7 +52,7 @@ export default function Home() {
           <Poster c={featured[3]} span="span-4" />
           <Poster c={featured[4]} span="span-4" />
         </div>
-        <Link href="/work" className="allwork" data-cur="ALL">SEE MORE <span>︎</span></Link>
+        <Link href="/work" className="allwork" data-cur="ALL">SEE MORE <span><Arr d="ne" /></span></Link>
       </section>
 
       <section style={{ background: 'var(--k)', color: 'var(--w)', position: 'relative', overflow: 'hidden' }}>
@@ -78,7 +79,7 @@ export default function Home() {
               <div><p className="sm" style={{ marginBottom: 8 }}>{s.t}</p><p className="d">{s.d}</p></div>
             </div>
           ))}
-          <Link href="/services" className="item" style={{ background: 'var(--or)' }} data-cur="ALL"><span className="n">︎</span><p className="sm">SEE THE<br />FULL LIST</p></Link>
+          <Link href="/services" className="item" style={{ background: 'var(--or)' }} data-cur="ALL"><span className="n"><Arr d="ne" /></span><p className="sm">SEE THE<br />FULL LIST</p></Link>
         </div>
       </section>
 

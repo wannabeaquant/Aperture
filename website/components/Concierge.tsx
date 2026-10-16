@@ -1,5 +1,6 @@
 'use client';
 import { Fragment, useRef, useState } from 'react';
+import Arr from '@/components/Arr';
 import Link from 'next/link';
 import { founders } from '@/lib/data';
 import { starter, waLink } from '@/lib/contact';
@@ -57,7 +58,7 @@ export default function Concierge() {
       <section className={`ask ${open ? 'open' : ''}`} aria-label="Ask Aperture" aria-hidden={!open} data-lenis-prevent>
         <header>
           <div><p className="mono">Ask Aperture</p><p className="mono">AI answers drawn from this site, with sources. Not a person.</p></div>
-          <button onClick={() => setOpen(false)} aria-label="Close">︎</button>
+          <button onClick={() => setOpen(false)} aria-label="Close"><Arr d="x" /></button>
         </header>
         <div className="ask-body" aria-live="polite">
           {m.length === 0 && <div className="starters">{starters.map((s) => (<button key={s} onClick={() => ask(s)}>{s}</button>))}</div>}
@@ -69,7 +70,7 @@ export default function Concierge() {
               {x.sources && x.sources.length > 0 && (
                 <>
                   {!x.answer && x.sources.map((s) => (
-                    <blockquote key={s.id}><p>{s.text}</p><Link href={s.href} className="mono ulink" onClick={() => setOpen(false)}>Source: {s.title} ︎</Link></blockquote>
+                    <blockquote key={s.id}><p>{s.text}</p><Link href={s.href} className="mono ulink" onClick={() => setOpen(false)}>Source: {s.title} <Arr d="r" /></Link></blockquote>
                   ))}
                   {x.answer && (
                     <div className="srcs">
@@ -98,7 +99,7 @@ export default function Concierge() {
         <div className="ask-human mono">PREFER A PERSON? {founders.map((f, i) => (<span key={f.name}>{i ? ' / ' : ''}<a className="ulink" href={waLink(f.phone, starter)} target="_blank" rel="noreferrer">{f.name.split(' ')[0]}</a></span>))} ON WHATSAPP</div>
         <form onSubmit={(e) => { e.preventDefault(); ask(q); }}>
           <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Ask about our work, services, process" aria-label="Your question" />
-          <button aria-label="Send" disabled={busy}>︎</button>
+          <button aria-label="Send" disabled={busy}><Arr d="r" /></button>
         </form>
       </section>
     </>

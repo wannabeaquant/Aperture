@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Arr from '@/components/Arr';
 import type { Metadata } from 'next';
 import Barcode from '@/components/Barcode';
 import Tape from '@/components/Tape';
@@ -48,7 +49,7 @@ export default function Studio() {
           <Lines className="big" lines={['"BUILT FOR', 'AGENCIES"']} />
           <p style={{ marginTop: 36, maxWidth: '52ch', fontSize: 19, lineHeight: 1.45 }}>If you hold the client relationship and need a team to build the automation or software behind it, we can be that team. We cover AI, software and web together, and we agree how the engagement is packaged, including white-label delivery, on a call.</p>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginTop: 40, flexWrap: 'wrap', gap: 24 }}>
-            <Link href="/contact" className="btn or" data-cur="BOOK">Talk to us ︎</Link>
+            <Link href="/contact" className="btn or" data-cur="BOOK">Talk to us <Arr d="ne" /></Link>
             <Barcode seed={3} />
           </div>
         </div>

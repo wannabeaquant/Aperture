@@ -331,7 +331,7 @@ html:has(dialog[open]) { overflow: hidden; }
   .hero-foot { gap: 18px; }
   .hero-bc { display: none; }
   .hero-orange { display: none; }
-  .btn { height: 50px; padding: 0 20px; font-size: 14px; }
+  .btn { height: 50px; padding: 0 14px; gap: 8px; font-size: 13px; }
   .cstat { min-height: 140px; padding: 14px; }
   .part { min-height: 120px; padding: 14px; }
   .founder { min-height: 300px; }
@@ -349,3 +349,6 @@ html:has(dialog[open]) { overflow: hidden; }
   .sheet a[aria-current='page'] { background: var(--k); color: var(--w); }
   .sheet a:active { background: var(--or); color: var(--k); }
 }
+
+.arr { display: inline-block; width: .85em; height: .85em; vertical-align: -.1em; flex: none; }
+.p-arrow .arr, .item .n .arr { width: 1em; height: 1em; vertical-align: baseline; }

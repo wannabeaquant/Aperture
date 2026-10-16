@@ -1,5 +1,6 @@
 'use client';
 import Link from 'next/link';
+import Arr from '@/components/Arr';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -27,7 +28,7 @@ export default function Nav() {
         </nav>
         <div className="nav-r">
           <button className="kbd" onClick={() => window.dispatchEvent(new Event('aperture:palette'))} aria-label="Open search">CTRL K</button>
-          <Link href="/contact" className="pill talk">Talk to us ︎</Link>
+          <Link href="/contact" className="pill talk">Talk to us <Arr d="ne" /></Link>
           <button className="burger" aria-expanded={menu} aria-label={menu ? 'Close menu' : 'Open menu'} onClick={() => setMenu((m) => !m)}>{menu ? 'CLOSE' : 'MENU'}</button>
         </div>
       </div>
