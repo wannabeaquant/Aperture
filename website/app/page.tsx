@@ -1,4 +1,8 @@
 import Link from 'next/link';
+import type { Metadata } from 'next';
+import JsonLd from '@/components/JsonLd';
+import { homeGraph } from '@/lib/schema';
+import { SITE_DESC } from '@/lib/site';
 import Arr from '@/components/Arr';
 import Barcode from '@/components/Barcode';
 import LogoWall from '@/components/LogoWall';
@@ -10,6 +14,8 @@ import Fit from '@/components/Fit';
 import { Lines, Rv } from '@/components/Reveal';
 import { clients, featured, services, steps } from '@/lib/data';
 
+export const metadata: Metadata = { title: { absolute: 'Aperture | AI Automation, Voice Agents and App Development Studio' }, description: SITE_DESC, alternates: { canonical: '/' } };
+
 const Head = ({ no, title, right }: { no: string; title: string; right?: string }) => (
   <div className="fig mono"><span>({no}) {title}</span><span>{right}</span></div>
 );
@@ -17,6 +23,7 @@ const Head = ({ no, title, right }: { no: string; title: string; right?: string 
 export default function Home() {
   return (
     <>
+      <JsonLd data={homeGraph()} />
       <section className="hero" style={{ position: 'relative', overflow: 'hidden', borderBottom: '2px solid var(--k)' }}>
         <div className="fig mono"><span>FIG. 01 / APERTURE</span><span className="hide-s" style={{ textAlign: 'center' }}>AI SYSTEMS FOR AGENCIES, BPOS AND PRODUCT TEAMS</span><span>APERTURECM.IN</span></div>
 

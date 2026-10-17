@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import Arr from '@/components/Arr';
 import type { Metadata } from 'next';
+import JsonLd from '@/components/JsonLd';
+import { studioGraph } from '@/lib/schema';
 import Barcode from '@/components/Barcode';
 import Tape from '@/components/Tape';
 import ZipTie from '@/components/ZipTie';
@@ -8,11 +10,12 @@ import Fit from '@/components/Fit';
 import { Lines, Rv } from '@/components/Reveal';
 import { founders, steps } from '@/lib/data';
 
-export const metadata: Metadata = { title: 'Studio', description: 'Two founders who both stay on the work, from the first scope call to launch.' };
+export const metadata: Metadata = { title: 'About the Studio and Founders', description: 'Aperture is two founders, Atharva Singh and Sanidhya Shishodia, who both stay on the work from the first scope call to launch.', alternates: { canonical: '/studio' } };
 
 export default function Studio() {
   return (
     <>
+      <JsonLd data={studioGraph()} />
       <div className="fig mono"><span>(04) STUDIO</span><span>26+ CLIENTS, 6+ INDUSTRIES</span></div>
       <div style={{ padding: 'clamp(28px,5vw,72px) var(--pad) clamp(28px,4vw,56px)' }}>
         <Fit as="h1" now className="mega" max={230} lines={['"TWO', 'FOUNDERS"']} />

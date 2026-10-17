@@ -1,4 +1,6 @@
 import type { Metadata } from 'next';
+import JsonLd from '@/components/JsonLd';
+import { contactGraph } from '@/lib/schema';
 import Arr from '@/components/Arr';
 import Intake from '@/components/Intake';
 import Tape from '@/components/Tape';
@@ -7,12 +9,13 @@ import { Rv } from '@/components/Reveal';
 import { founders } from '@/lib/data';
 import { starter, waLink } from '@/lib/contact';
 
-export const metadata: Metadata = { title: 'Talk to us', description: 'Message or call the founders directly, or leave a quick brief.' };
+export const metadata: Metadata = { title: 'Contact Aperture: WhatsApp, Call or Quick Brief', description: 'Message or call the founders on WhatsApp, email them, or leave a quick brief. Both founders read everything that comes in.', alternates: { canonical: '/contact' } };
 
 export default function Contact() {
   const booking = process.env.NEXT_PUBLIC_BOOKING_URL;
   return (
     <>
+      <JsonLd data={contactGraph()} />
       <div className="fig mono"><span>(05) CONTACT</span><span>THE FASTEST WAY IS WHATSAPP</span></div>
       <div style={{ padding: 'clamp(28px,5vw,72px) var(--pad) clamp(28px,4vw,56px)' }}>
         <Fit as="h1" now className="mega" max={230} lines={['"TALK', 'TO US"']} />

@@ -8,13 +8,15 @@ import Fit from '@/components/Fit';
 import { nameLines } from '@/lib/lines';
 import { Rv } from '@/components/Reveal';
 import { clients } from '@/lib/data';
+import JsonLd from '@/components/JsonLd';
+import { caseGraph } from '@/lib/schema';
 
 export function generateStaticParams() { return clients.map((c) => ({ slug: c.slug })); }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const c = clients.find((x) => x.slug === slug);
-  return c ? { title: c.name, description: c.line } : {};
+  return c ? { title: `${c.name} Case Study`, description: `${c.line} ${c.built.slice(0, 3).join(', ')}.`.slice(0, 158), alternates: { canonical: `/work/${c.slug}` }, openGraph: { type: 'article', url: `/work/${c.slug}`, title: `${c.name} Case Study`, description: c.line, images: ['/opengraph-image'] }, twitter: { card: 'summary_large_image', images: ['/opengraph-image'] } } : {};
 }
 
 export default async function Client({ params }: { params: Promise<{ slug: string }> }) {
@@ -25,6 +27,7 @@ export default async function Client({ params }: { params: Promise<{ slug: strin
   const next = clients[(i + 1) % clients.length];
   return (
     <>
+      <JsonLd data={caseGraph(c.slug)} />
       <section style={{ background: c.bg, color: c.fg, borderBottom: '2px solid var(--k)' }}>
         <div className="fig mono" style={{ borderColor: c.fg }}><Link href="/work"><Arr d="l" /> ALL WORK</Link><span>{c.no} / {c.sector}</span></div>
         <div style={{ padding: 'clamp(28px,5vw,72px) var(--pad) clamp(28px,4vw,56px)' }}>

@@ -1,15 +1,18 @@
 import Link from 'next/link';
 import Arr from '@/components/Arr';
 import type { Metadata } from 'next';
+import JsonLd from '@/components/JsonLd';
+import { servicesGraph } from '@/lib/schema';
 import Tape from '@/components/Tape';
 import Fit from '@/components/Fit';
 import { services } from '@/lib/data';
 
-export const metadata: Metadata = { title: 'Services', description: 'Voice agents, AI automation, multi-agent systems, apps, websites, CRM and integrations from one team.' };
+export const metadata: Metadata = { title: 'AI Automation, Voice Agent and Multi-Agent System Services', description: 'Voice agents, AI automation, multi-agent systems, chatbots, websites, web and mobile apps, CRM and integrations from one team.', alternates: { canonical: '/services' } };
 
 export default function Services() {
   return (
     <>
+      <JsonLd data={servicesGraph()} />
       <div className="fig mono"><span>(03) SERVICES</span><span>{services.length} THINGS, AND MORE</span></div>
       <div style={{ padding: 'clamp(28px,5vw,72px) var(--pad) clamp(28px,4vw,56px)' }}>
         <Fit as="h1" now className="mega" max={260} lines={['"SERVICES"']} />

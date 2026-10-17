@@ -2,13 +2,16 @@ import type { Metadata } from 'next';
 import Poster from '@/components/Poster';
 import Tape from '@/components/Tape';
 import Fit from '@/components/Fit';
+import JsonLd from '@/components/JsonLd';
+import { workGraph } from '@/lib/schema';
 import { clients, featured, rest } from '@/lib/data';
 
-export const metadata: Metadata = { title: 'Work', description: 'What we have built for BPOs, fintech, education, property and interiors clients.' };
+export const metadata: Metadata = { title: 'Client Work: AI Systems, Websites and Apps', description: 'What Aperture has built for AI, finance, education, property, interiors and operations teams: AI products, voice agents, CRMs, websites and apps.', alternates: { canonical: '/work' } };
 
 export default function Work() {
   return (
     <>
+      <JsonLd data={workGraph()} />
       <div className="fig mono"><span>(02) WORK</span><span>{clients.length} CLIENTS</span></div>
       <div style={{ padding: 'clamp(28px,5vw,72px) var(--pad) clamp(28px,4vw,56px)' }}>
         <Fit as="h1" now className="mega" max={260} lines={['"WORK"']} />
