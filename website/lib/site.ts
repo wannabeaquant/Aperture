@@ -1,6 +1,6 @@
 import { founders } from './data';
 
-export const SITE_URL = 'https://aperturecm.in';
+export const SITE_URL = 'https://www.aperturecm.in';
 export const SITE_NAME = 'Aperture';
 export const SITE_DESC = 'Aperture is an AI automation studio. We build voice agents, multi-agent systems, websites and apps. Automations ship in 2-3 days, websites in 4-5.';
 

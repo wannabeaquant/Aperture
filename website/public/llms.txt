@@ -3,14 +3,14 @@
 > Aperture is a two-founder AI automation and software studio based in India. It builds voice agents, AI automation, multi-agent systems, websites and apps. Typical timelines: automations two to three days, websites four to five days, multi-agent systems under a week, confirmed after scoping. Pricing is not published.
 
 ## Pages
-- [Services](https://aperturecm.in/services): voice agents, AI automation, AI workflows, AI agents, multi-agent systems, chat and WhatsApp bots, websites, web and mobile apps, CRM and internal tools, integrations, dashboards.
-- [Work](https://aperturecm.in/work): client projects across AI, finance, education, property, interiors and operations.
-- [Studio](https://aperturecm.in/studio): the founders and how a project runs.
-- [Contact](https://aperturecm.in/contact): WhatsApp, phone, email or a quick brief.
+- [Services](https://www.aperturecm.in/services): voice agents, AI automation, AI workflows, AI agents, multi-agent systems, chat and WhatsApp bots, websites, web and mobile apps, CRM and internal tools, integrations, dashboards.
+- [Work](https://www.aperturecm.in/work): client projects across AI, finance, education, property, interiors and operations.
+- [Studio](https://www.aperturecm.in/studio): the founders and how a project runs.
+- [Contact](https://www.aperturecm.in/contact): WhatsApp, phone, email or a quick brief.
 
 ## Founders
 - Atharva Singh: +91 99900 52074, atharvasingh0405@gmail.com
 - Sanidhya Shishodia: +91 93683 22072, shishodiasanidhya@gmail.com
 
 ## Optional
-- [Sitemap](https://aperturecm.in/sitemap.xml)
+- [Sitemap](https://www.aperturecm.in/sitemap.xml)

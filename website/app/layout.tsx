@@ -15,7 +15,7 @@ const sans = Archivo({ subsets: ['latin'], variable: '--font-sans', weight: ['40
 const mono = IBM_Plex_Mono({ subsets: ['latin'], variable: '--font-mono', weight: ['400', '500'] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://aperturecm.in'),
+  metadataBase: new URL('https://www.aperturecm.in'),
   title: { default: 'Aperture | AI Automation, Voice Agents and App Development Studio', template: '%s / Aperture' },
   description: SITE_DESC,
   applicationName: 'Aperture',
