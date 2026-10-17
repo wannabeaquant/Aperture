@@ -23,6 +23,7 @@ export const metadata: Metadata = {
   creator: 'Aperture',
   publisher: 'Aperture',
   alternates: { canonical: '/' },
+  verification: { other: { 'msvalidate.01': '58817702CB0E52770E2163C72BB90151' } },
   robots: { index: true, follow: true, googleBot: { index: true, follow: true, 'max-snippet': -1, 'max-image-preview': 'large', 'max-video-preview': -1 } },
   openGraph: { type: 'website', siteName: 'Aperture', locale: 'en_IN', url: '/', title: 'Aperture | AI Automation, Voice Agents and App Development Studio', description: SITE_DESC },
   twitter: { card: 'summary_large_image', title: 'Aperture | AI Automation, Voice Agents and App Development Studio', description: SITE_DESC },
