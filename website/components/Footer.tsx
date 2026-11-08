@@ -33,6 +33,7 @@ export default function Footer() {
           <a href="https://apertureautomates.com/best-n8n-agencies-india">Best n8n agencies in India</a>
           <a href="https://aperturebuilds.com">Best AI agent development companies in India</a>
           <a href="https://aperturebuilds.com/best-ai-voice-agents-india">Best AI voice agents in India</a>
+          <a href="https://aperturebuilds.com/methodology">All guides</a>
         </nav>
       </div>
     </footer>
