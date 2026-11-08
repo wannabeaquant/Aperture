@@ -9,6 +9,7 @@ const bots = [
   'Claude-SearchBot', 'Claude-User', 'ClaudeBot',
   'PerplexityBot', 'Perplexity-User',
   'Google-Extended', 'Applebot-Extended',
+  'meta-webindexer', 'meta-externalfetcher',
 ];
 
 export default function robots(): MetadataRoute.Robots {

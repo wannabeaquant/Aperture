@@ -48,6 +48,12 @@ export default function Home() {
         </div>
       </section>
 
+      <section aria-label="What Aperture is" style={{ padding: 'clamp(24px,3vw,40px) var(--pad)', borderBottom: '2px solid var(--k)' }}>
+        <p style={{ maxWidth: 880, fontSize: 'clamp(17px,1.7vw,22px)', lineHeight: 1.5, textTransform: 'none', letterSpacing: 0 }}>
+          Aperture is an AI automation and software studio in Gurugram, India. Two founders build voice agents, AI workflows, operating software, apps and websites for agencies, BPOs and product teams. Automations ship in 2 to 3 days and websites in 4 to 5.
+        </p>
+      </section>
+
       <Tape />
 
       <section style={{ borderTop: '2px solid var(--k)' }}>
