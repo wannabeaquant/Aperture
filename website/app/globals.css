@@ -367,3 +367,17 @@ html:has(dialog[open]) { overflow: hidden; }
 .lead-card .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
 .lead-err { color: #b00020; font-size: 13px; font-weight: 700; }
 .lead-alt { font-size: 12.5px; }
+
+/* Service landing pages */
+.lp { padding: clamp(28px, 4vw, 56px) var(--pad); border-bottom: 2px solid var(--k); }
+.lp > .mono { margin-bottom: 20px; }
+.lp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; }
+.lp-grid h2 { font-size: clamp(20px, 2vw, 28px); font-weight: 900; text-transform: uppercase; letter-spacing: -.02em; line-height: 1.05; margin: 8px 0; }
+.lp-grid p, .lp-faq p, .lp-time { font-size: 16px; line-height: 1.5; max-width: 70ch; }
+.lp-work { display: grid; gap: 0; border: 2px solid var(--k); }
+.lp-work a { display: grid; gap: 6px; padding: 18px; border-bottom: 2px solid var(--k); background: var(--w); transition: background .2s; }
+.lp-work a:last-child { border-bottom: 0; } .lp-work a:hover { background: var(--yl); }
+.lp-work b { text-transform: uppercase; font-weight: 900; }
+.lp-time { margin-top: 20px; }
+.lp-faq details { border-bottom: 2px solid var(--k); padding: 14px 0; } .lp-faq summary { font-weight: 800; cursor: pointer; } .lp-faq p { margin-top: 8px; }
+.svc-pages { display: flex; flex-wrap: wrap; gap: 10px; padding: 24px var(--pad); border-bottom: 2px solid var(--k); }

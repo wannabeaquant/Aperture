@@ -24,7 +24,12 @@ export default function Concierge() {
   useEffect(() => { end.current?.scrollIntoView({ behavior: 'smooth', block: 'end' }); }, [m, showLead, leadState]);
   useEffect(() => { if (open) setTimeout(() => input.current?.focus(), 250); }, [open]);
   // Visitors arriving from the comparison guides (?chat=1&ref=...) land straight in the chat.
-  useEffect(() => { if (new URLSearchParams(window.location.search).get('chat') === '1') setOpen(true); }, []);
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).get('chat') === '1') setOpen(true);
+    const openChat = () => setOpen(true);
+    window.addEventListener('aperture:chat', openChat);
+    return () => window.removeEventListener('aperture:chat', openChat);
+  }, []);
 
   const ask = async (text: string) => {
     if (!text.trim() || busy) return;

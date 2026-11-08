@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next';
 import { clients } from '@/lib/data';
+import { landings } from '@/lib/landing';
 import { abs } from '@/lib/site';
 
 // Bump this date only when page content really changes: Google and Bing ignore lastmod once it proves unreliable.
@@ -13,5 +14,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: abs('/studio'), lastModified: UPDATED },
     { url: abs('/contact'), lastModified: UPDATED },
     ...clients.map((c) => ({ url: abs(`/work/${c.slug}`), lastModified: UPDATED })),
+    ...landings.map((l) => ({ url: abs(`/services/${l.slug}`), lastModified: new Date('2026-11-09') })),
   ];
 }

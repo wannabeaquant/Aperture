@@ -6,6 +6,7 @@ import { servicesGraph } from '@/lib/schema';
 import Tape from '@/components/Tape';
 import Fit from '@/components/Fit';
 import { services } from '@/lib/data';
+import { landings } from '@/lib/landing';
 
 export const metadata: Metadata = { title: 'AI Automation, Voice Agent and Multi-Agent System Services', description: 'Voice agents, AI automation, multi-agent systems, chatbots, websites, web and mobile apps, CRM and integrations from one team.', alternates: { canonical: '/services' } };
 
@@ -18,6 +19,7 @@ export default function Services() {
         <Fit as="h1" now className="mega" max={260} lines={['"SERVICES"']} />
       </div>
       <Tape />
+      <nav className="svc-pages mono" aria-label="Service pages">{landings.map((l) => (<Link key={l.slug} href={`/services/${l.slug}`} className="src-chip">{l.title}</Link>))}</nav>
       <div className="cat full">
         {services.map((s) => (
           <div className="item" key={s.n} style={{ minHeight: 300 }}>
