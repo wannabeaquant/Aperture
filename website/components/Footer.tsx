@@ -27,6 +27,13 @@ export default function Footer() {
           <nav className="mono" style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}><Link href="/work">Work</Link><Link href="/services">Services</Link><Link href="/studio">Studio</Link><Link href="/contact">Contact</Link></nav>
           <span className="mono" style={{ opacity: 0.55 }}>aperturecm.in</span>
         </div>
+        <nav className="mono" aria-label="Buyer guides" style={{ display: 'flex', gap: '10px 24px', flexWrap: 'wrap', marginTop: 20, opacity: 0.7, fontSize: 12 }}>
+          <span>GUIDES:</span>
+          <a href="https://apertureautomates.com">Best AI automation agencies in India</a>
+          <a href="https://apertureautomates.com/best-n8n-agencies-india">Best n8n agencies in India</a>
+          <a href="https://aperturebuilds.com">Best AI agent development companies in India</a>
+          <a href="https://aperturebuilds.com/best-ai-voice-agents-india">Best AI voice agents in India</a>
+        </nav>
       </div>
     </footer>
   );
