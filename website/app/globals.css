@@ -145,9 +145,9 @@ img { max-width: 100%; display: block; }
 .you { align-self: flex-end; background: var(--k); color: var(--w); padding: 9px 13px; max-width: 85%; font-weight: 700; font-size: 14px; }
 .bot { display: grid; gap: 8px; font-size: 14px; }
 .bot blockquote { background: var(--w); border: 2px solid var(--k); border-left: 8px solid var(--or); padding: 12px; display: grid; gap: 8px; line-height: 1.4; }
-.ask form { display: flex; border-top: 3px solid var(--k); }
-.ask form input { flex: 1; border: 0; background: var(--w); padding: 15px; font: inherit; font-weight: 600; outline: none; }
-.ask form button { width: 58px; background: var(--k); color: var(--w); font-size: 20px; font-weight: 900; }
+.ask-input { display: flex; border-top: 3px solid var(--k); }
+.ask-input input { flex: 1; border: 0; background: var(--w); padding: 15px; font: inherit; font-weight: 600; outline: none; }
+.ask-input button { width: 58px; background: var(--k); color: var(--w); font-size: 20px; font-weight: 900; }
 
 /* cursor */
 .cur { position: fixed; left: 0; top: 0; z-index: 90; pointer-events: none; mix-blend-mode: difference; width: 0; height: 0; }
@@ -301,7 +301,7 @@ html { overflow-x: clip; }
 .passages blockquote { border: 0; border-top: 2px solid var(--g2); border-left: 0; font-size: 13px; padding: 10px 12px; }
 .thinking { opacity: .6; animation: blink 1s ease-in-out infinite alternate; }
 @keyframes blink { from { opacity: .3; } to { opacity: .8; } }
-.ask form button[disabled] { opacity: .5; }
+.ask-input button[disabled] { opacity: .5; }
 
 /* scrolling inside the open chat or search box must not scroll the page behind it */
 .ask-body, .pal ul { overscroll-behavior: contain; }
@@ -352,3 +352,18 @@ html:has(dialog[open]) { overflow: hidden; }
 
 .arr { display: inline-block; width: .85em; height: .85em; vertical-align: -.1em; flex: none; }
 .p-arrow .arr, .item .n .arr { width: 1em; height: 1em; vertical-align: baseline; }
+
+/* Chat concierge */
+.ask-sub { opacity: .7; font-size: 11px; margin-top: 2px; }
+.bot > p { background: var(--w); border: 2px solid var(--k); padding: 10px 12px; max-width: 92%; line-height: 1.45; }
+.typing { display: inline-flex; gap: 5px; align-items: center; width: max-content; }
+.typing i { width: 7px; height: 7px; border-radius: 50%; background: var(--k); opacity: .3; animation: typing 1s infinite; }
+.typing i:nth-child(2) { animation-delay: .15s; } .typing i:nth-child(3) { animation-delay: .3s; }
+@keyframes typing { 50% { opacity: 1; transform: translateY(-2px); } }
+.lead-card { display: grid; gap: 8px; background: var(--yl); border: 2px solid var(--k); padding: 12px; }
+.lead-card input { border: 2px solid var(--k); background: var(--w); padding: 10px 11px; font: inherit; font-weight: 600; font-size: 14px; outline: none; }
+.lead-card input:focus { border-color: var(--or); }
+.lead-card .btn { height: 42px; font-size: 12.5px; border-width: 2px; justify-content: center; }
+.lead-card .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.lead-err { color: #b00020; font-size: 13px; font-weight: 700; }
+.lead-alt { font-size: 12.5px; }

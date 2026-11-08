@@ -61,7 +61,7 @@ export async function POST(req: NextRequest) {
   const need = clean(b.need, 600);
   const summary = clean(b.summary, 240);
   const services = Array.isArray(b.services) ? (b.services as unknown[]).map((s) => clean(s, 40)).filter(Boolean).slice(0, 4) : [];
-  const note = clean(b.note, 400);
+  const note = clean(b.note, 1800);
   const page = clean(b.page, 120);
   const askedHuman = Boolean(b.askedHuman);
 

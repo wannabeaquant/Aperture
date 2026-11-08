@@ -1,75 +1,63 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { retrieve } from '@/lib/retrieve';
 import { chunks } from '@/lib/data';
 
 export const runtime = 'nodejs';
 
 const hits = new Map<string, number[]>();
-function limited(ip: string, max = 20, windowMs = 10 * 60 * 1000) {
+function limited(ip: string, max = 30, windowMs = 10 * 60 * 1000) {
   const now = Date.now();
   const arr = (hits.get(ip) || []).filter((t) => now - t < windowMs);
   arr.push(now); hits.set(ip, arr);
   return arr.length > max;
 }
 
-const SYSTEM = `You are "Ask Aperture", the assistant on the Aperture website. Aperture is a two-founder studio that builds AI automation, voice agents, operating software and apps, and is known for delivering quality work at very high speed.
+// The whole fact sheet is small, so the model always sees all of it instead of a keyword-picked slice.
+const FACTS = chunks.map((c) => `- ${c.title}: ${c.text}`).join('\n');
 
-You can answer in two ways:
-1) GENERAL questions (what an AI agent or voice agent is, how automation helps a business, how to approach a project, small talk): answer helpfully and briefly from your own knowledge. Do not cite sources for these.
-2) Questions about APERTURE ITSELF (its work, clients, services, process, timelines, contact, pricing): use ONLY the numbered sources below. Cite each claim with its source number in square brackets, like [1] or [2][3]. Only cite a source you actually used.
+const SYSTEM = `You are the assistant on the website of Aperture, a two-founder studio in India that builds AI automation, AI agents, voice agents, chat and WhatsApp bots, websites, apps and internal software. Your job is to help the visitor quickly and get them talking to the founders.
 
-Rules:
-- Never invent facts about Aperture: no clients, numbers, projects, prices, timelines or guarantees beyond the sources. If a question about Aperture is not covered by the sources, say you do not have that and that the founders can answer directly. Do not cite anything for that.
-- If asked why to choose Aperture or how it compares, talk about speed and quality: quality delivered at very high speed, with both founders on every project, drawing on the sources.
-- When asked about speed, how fast, delivery or timelines, lead with speed and quality and give the timelines exactly as written in the sources, framed as typical, with the exact timeline confirmed after scoping. For a timeline the sources do not cover (for example voice agents or apps), say it depends on scope and the founders will give a figure.
-- Never claim Aperture is better, cheaper or faster than other agencies or any named competitor. Describe what Aperture does and how quickly it typically delivers, without comparing.
-- If asked about pricing, say pricing is not published and to ask the founders.
-- Repeat figures and counts exactly as written in the sources. Figures marked as an estimate or planning model must be described that way.
-- If the visitor names a company that does not appear in the sources, say it does not appear among the work listed on this site. Never say the site covers no clients, because it lists many.
-- If a question is clearly unrelated to business, technology or Aperture, answer in one short line and steer back to how you can help.
-- Keep answers to 2 to 4 short sentences in plain, natural language. No marketing language, no em dashes.`;
+How to talk:
+- Sound like a sharp, friendly person on the team, not a search engine. Plain words, 1 to 3 short sentences. No lists unless asked. No em dashes. No citations, brackets, "according to the site" or "the sources say".
+- Answer what they asked first. Then, when it fits, ask ONE short question that moves things forward: what they want automated, what tools they use, how many people or calls or leads are involved, or when they need it.
+- If they describe a problem, say concretely how Aperture would approach it in one or two sentences, mention a relevant past project only if it truly fits, and give the typical timeline if one exists.
+- When they seem interested, want pricing, a call or next steps, suggest they leave their name and WhatsApp or email in the chat so a founder replies the same day.
+- General questions (what an AI agent is, is n8n good, voice AI in Hindi) are fine: answer briefly from your own knowledge, then relate it back to what they might need.
+
+Facts about Aperture (use them naturally, never quote them verbatim, never go beyond them):
+${FACTS}
+
+Hard rules:
+- Never invent clients, numbers, prices, guarantees or timelines. Pricing is not published: say it depends on scope and a founder will quote after a short call.
+- Figures described as a planning model or estimate must be called estimates.
+- If you do not know something about Aperture, say a founder can answer it and invite them to leave their contact.
+- If a named company is not in the facts, do not claim to have worked with it.
+- Do not disparage or compare against named competitors.`;
 
 type Msg = { role: 'user' | 'assistant'; content: string };
+
+const FALLBACK = 'Happy to help with that. Tell me a bit about what you want automated or built, and leave your name and WhatsApp or email here so one of the founders can reply today.';
 
 export async function POST(req: NextRequest) {
   const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'local';
   let body: { messages?: Msg[] };
   try { body = await req.json(); } catch { return NextResponse.json({ ok: false }, { status: 400 }); }
-  const msgs = (body.messages || []).filter((m) => m && typeof m.content === 'string').slice(-6)
-    .map((m) => ({ role: m.role === 'assistant' ? 'assistant' as const : 'user' as const, content: m.content.slice(0, 500) }));
-  const lastUser = [...msgs].reverse().find((m) => m.role === 'user')?.content || '';
-  if (!lastUser.trim()) return NextResponse.json({ ok: false }, { status: 400 });
-
-  // Retrieve from the visitor's last two questions so follow-ups like "and the price?" still find context.
-  const userTurns = msgs.filter((m) => m.role === 'user').slice(-2).map((m) => m.content).join(' ');
-  const found = retrieve(lastUser, 3).length ? retrieve(userTurns, 3) : retrieve(lastUser, 3);
-  // Always keep the brand basics in context so positioning and speed questions have something true to draw on.
-  const base = chunks.filter((c) => c.id === 'speed' || c.id === 'who');
-  const merged = [...found, ...base.filter((b) => !found.some((f) => f.id === b.id))];
-  const sources = merged.map((c, i) => ({ n: i + 1, id: c.id, title: c.title, href: c.href, text: c.text }));
+  const msgs = (body.messages || []).filter((m) => m && typeof m.content === 'string' && m.content.trim()).slice(-10)
+    .map((m) => ({ role: m.role === 'assistant' ? 'assistant' as const : 'user' as const, content: m.content.slice(0, 800) }));
+  if (!msgs.length || msgs[msgs.length - 1].role !== 'user') return NextResponse.json({ ok: false }, { status: 400 });
 
   const account = process.env.CF_ACCOUNT_ID, token = process.env.CF_API_TOKEN;
-  // No AI available: fall back to quoting the best matching passages, or say it is not covered.
-  if (!account || !token || limited(ip)) {
-    const quote = sources.filter((x) => found.some((f) => f.id === x.id));
-    return NextResponse.json({ ok: true, answer: null, sources: quote, via: quote.length ? 'quotes' : 'none' });
-  }
+  if (!account || !token || limited(ip)) return NextResponse.json({ ok: true, answer: FALLBACK, via: 'fallback' });
 
   try {
     const ctrl = new AbortController();
     const timer = setTimeout(() => ctrl.abort(), 12000);
-    const context = sources.map((s) => `[${s.n}] ${s.title}: ${s.text}`).join('\n\n');
     const res = await fetch(`https://api.cloudflare.com/client/v4/accounts/${account}/ai/v1/chat/completions`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
       body: JSON.stringify({
         model: process.env.CF_AI_MODEL || '@cf/meta/llama-3.3-70b-instruct-fp8-fast',
-        temperature: 0.2, max_tokens: 260,
-        messages: [
-          { role: 'system', content: `${SYSTEM}\n\nSOURCES:\n${context}` },
-          ...msgs.slice(0, -1).slice(-4),
-          { role: 'user', content: lastUser },
-        ],
+        temperature: 0.4, max_tokens: 220,
+        messages: [{ role: 'system', content: SYSTEM }, ...msgs],
       }),
       signal: ctrl.signal,
     });
@@ -78,20 +66,10 @@ export async function POST(req: NextRequest) {
     const data = await res.json();
     let answer: string = (data.choices?.[0]?.message?.content || '').trim();
     if (!answer) throw new Error('empty');
-    answer = answer.replace(/\s*[—–]\s*/g, ', ').slice(0, 900);
-    // A "not covered" answer asserts nothing from the site, so it carries no citations or sources.
-    if (/does not (appear|cover)|not covered|do not cover/i.test(answer) && !/days?|week/i.test(answer)) {
-      return NextResponse.json({ ok: true, answer: answer.replace(/\s*\[\d\]/g, ''), sources: [], human: true, via: 'ai' });
-    }
-
-    // Show only the sources the model actually cited. General answers cite nothing.
-    const cited = new Set([...answer.matchAll(/\[(\d)\]/g)].map((m) => Number(m[1])));
-    const used = sources.filter((x) => cited.has(x.n));
-    const human = /founders/i.test(answer);
-    if (!used.length) answer = answer.replace(/\s*\[\d\]/g, '');
-    return NextResponse.json({ ok: true, answer, sources: used, human, via: 'ai' });
+    // Strip anything citation-shaped the model might still emit, and em/en dashes.
+    answer = answer.replace(/\s*\[\d+\]/g, '').replace(/\s*[—–]\s*/g, ', ').slice(0, 900);
+    return NextResponse.json({ ok: true, answer, via: 'ai' });
   } catch {
-    const quote = sources.filter((x) => found.some((f) => f.id === x.id));
-    return NextResponse.json({ ok: true, answer: null, sources: quote, via: quote.length ? 'quotes' : 'none' });
+    return NextResponse.json({ ok: true, answer: FALLBACK, via: 'fallback' });
   }
 }
