@@ -1,5 +1,5 @@
 import { clients, services } from './data';
-import { SAME_AS, SITE_DESC, SITE_NAME, SITE_URL, abs, people } from './site';
+import { ADDRESS, SAME_AS, SITE_DESC, SITE_NAME, SITE_URL, abs, people } from './site';
 
 type Node = Record<string, unknown>;
 const ORG = `${SITE_URL}/#organization`;
@@ -24,7 +24,7 @@ const serviceNode = (s: (typeof services)[number]): Node => ({
 });
 
 const organization = (): Node => ({
-  '@type': 'Organization',
+  '@type': ['Organization', 'ProfessionalService'],
   '@id': ORG,
   name: SITE_NAME,
   alternateName: ['Aperture Studios', 'Aperture CM', 'Aperture AI Studio', 'aperturecm.in'],
@@ -35,6 +35,8 @@ const organization = (): Node => ({
   slogan: 'The thing behind the thing',
   email: people[0].email,
   telephone: people[0].phone,
+  priceRange: '$$',
+  address: { '@type': 'PostalAddress', streetAddress: ADDRESS.street, addressLocality: ADDRESS.city, addressRegion: ADDRESS.region, postalCode: ADDRESS.postal, addressCountry: ADDRESS.country },
   contactPoint: [
     ...people.map((p) => ({ '@type': 'ContactPoint', contactType: 'sales', name: p.name, telephone: p.phone, email: p.email, availableLanguage: ['English', 'Hindi'], areaServed: 'IN' })),
   ],

@@ -8,7 +8,7 @@ import JsonLd from '@/components/JsonLd';
 import ChatButton from '@/components/ChatButton';
 import { landings } from '@/lib/landing';
 import { page } from '@/lib/schema';
-import { abs, SITE_URL } from '@/lib/site';
+import { abs, SITE_URL, BOOKING_URL } from '@/lib/site';
 
 export const dynamicParams = false;
 export function generateStaticParams() { return landings.map((l) => ({ slug: l.slug })); }
@@ -50,8 +50,8 @@ export default async function LandingPage({ params }: { params: Promise<{ slug: 
           <p className="mono" style={{ marginBottom: 20 }}>IN SHORT</p>
           <p className="lead">{l.lead}</p>
           <div className="cta-row" style={{ marginTop: 28 }}>
-            <ChatButton>Describe your project</ChatButton>
-            <Link href="/contact" className="btn">Leave a brief</Link>
+            <a href={BOOKING_URL} target="_blank" rel="noreferrer" className="btn k">Book a 30-min call</a>
+            <ChatButton className="btn">Describe your project</ChatButton>
           </div>
         </div>
         <ol className="built">{l.build.map((t, n) => (<li key={t}><span>0{n + 1}</span>{t}</li>))}</ol>
@@ -72,7 +72,7 @@ export default async function LandingPage({ params }: { params: Promise<{ slug: 
         <p className="mono">QUESTIONS</p>
         <div className="lp-faq">{l.faqs.map((f) => (<details key={f.q}><summary>{f.q}</summary><p>{f.a}</p></details>))}</div>
         {l.guide && <p className="lp-time">Comparing options? Read our guide: <a className="ulink" href={l.guide.href}>{l.guide.label}</a>.</p>}
-        <div className="cta-row" style={{ marginTop: 28 }}><ChatButton>Talk to a founder today</ChatButton></div>
+        <div className="cta-row" style={{ marginTop: 28 }}><a href={BOOKING_URL} target="_blank" rel="noreferrer" className="btn k">Book a 30-min call</a><ChatButton className="btn">Chat with a founder</ChatButton></div>
       </section>
     </>
   );

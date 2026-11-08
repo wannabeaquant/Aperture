@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import Arr from '@/components/Arr';
 import { founders } from '@/lib/data';
 import { starter, waLink, normalisePhone, isEmail } from '@/lib/contact';
+import { BOOKING_URL } from '@/lib/site';
 
 const WANTS_HUMAN = /price|pricing|cost|quote|budget|hire|talk|call me|whatsapp|contact|human|person|speak|reach|meet|book|demo|interested|start|proposal/i;
 
@@ -96,10 +97,11 @@ export default function Concierge() {
               {leadState === 'error' && <p className="lead-err">Please check the number or email and try again.</p>}
               {leadState === 'failed' && <p className="lead-err">That did not go through. Please try again, or WhatsApp us directly below.</p>}
               <button className="btn k" disabled={leadState === 'sending'}>{leadState === 'sending' ? 'Sending…' : 'Send to the founders'}</button>
+              <a className="btn" href={BOOKING_URL} target="_blank" rel="noreferrer">Or book a 30-min call</a>
               <p className="lead-alt">or WhatsApp {founders.map((f, i) => (<span key={f.name}>{i ? ' / ' : ''}<a className="ulink" href={waLink(f.phone, starter)} target="_blank" rel="noreferrer">{f.name.split(' ')[0][0] + f.name.split(' ')[0].slice(1).toLowerCase()}</a></span>))} directly</p>
             </form>
           )}
-          {leadState === 'sent' && <div className="bot"><p>Got it. A founder will reach out shortly. Keep asking anything in the meantime.</p></div>}
+          {leadState === 'sent' && <div className="bot"><p>Got it. A founder will reach out shortly. Want a fixed time instead? <a className="ulink" href={BOOKING_URL} target="_blank" rel="noreferrer">Book a 30-min call</a>.</p></div>}
           <div ref={end} />
         </div>
         <form className="ask-input" onSubmit={(e) => { e.preventDefault(); ask(q); }}>
