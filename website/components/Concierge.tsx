@@ -23,6 +23,8 @@ export default function Concierge() {
 
   useEffect(() => { end.current?.scrollIntoView({ behavior: 'smooth', block: 'end' }); }, [m, showLead, leadState]);
   useEffect(() => { if (open) setTimeout(() => input.current?.focus(), 250); }, [open]);
+  // Visitors arriving from the comparison guides (?chat=1&ref=...) land straight in the chat.
+  useEffect(() => { if (new URLSearchParams(window.location.search).get('chat') === '1') setOpen(true); }, []);
 
   const ask = async (text: string) => {
     if (!text.trim() || busy) return;
@@ -57,7 +59,7 @@ export default function Concierge() {
         body: JSON.stringify({
           name: lead.name, contact: c, website: lead.website,
           need: said.join(' / ').slice(0, 600), summary: (said[0] || 'Chat enquiry').slice(0, 240),
-          note: `Chat: ${transcript}`.slice(0, 1800), page: typeof window !== 'undefined' ? window.location.pathname : '',
+          note: `Chat: ${transcript}`.slice(0, 1800), page: typeof window !== 'undefined' ? (window.location.pathname + window.location.search).slice(0, 120) : '',
           askedHuman: true,
         }),
       });
