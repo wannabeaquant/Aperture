@@ -8,8 +8,9 @@ export const SITE_DESC = 'Aperture is an AI automation studio. We build voice ag
 export const SAME_AS: string[] = [];
 
 /** One name, address and phone everywhere (Google Business Profile, Clutch, directories). Keep identical. */
-export const ADDRESS = { street: 'M3M 65th Avenue, Golf Course Extension Road, Sector 65', city: 'Gurugram', region: 'Haryana', postal: '122102', country: 'IN' };
-export const ADDRESS_LINE = `${ADDRESS.street}, ${ADDRESS.city}, ${ADDRESS.region} ${ADDRESS.postal}`;
+// Service-area business: no public street address (matches the Google Business Profile).
+export const ADDRESS = { city: 'Gurugram', region: 'Haryana', country: 'IN' };
+export const ADDRESS_LINE = `${ADDRESS.city}, ${ADDRESS.region}, India`;
 export const BOOKING_URL = process.env.NEXT_PUBLIC_BOOKING_URL || 'https://calendly.com/aperture_inc/30min';
 
 export const abs = (p = '/') => `${SITE_URL}${p === '/' ? '' : p}`;

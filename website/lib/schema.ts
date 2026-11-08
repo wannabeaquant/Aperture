@@ -36,7 +36,7 @@ const organization = (): Node => ({
   email: people[0].email,
   telephone: people[0].phone,
   priceRange: '$$',
-  address: { '@type': 'PostalAddress', streetAddress: ADDRESS.street, addressLocality: ADDRESS.city, addressRegion: ADDRESS.region, postalCode: ADDRESS.postal, addressCountry: ADDRESS.country },
+  address: { '@type': 'PostalAddress', addressLocality: ADDRESS.city, addressRegion: ADDRESS.region, addressCountry: ADDRESS.country },
   contactPoint: [
     ...people.map((p) => ({ '@type': 'ContactPoint', contactType: 'sales', name: p.name, telephone: p.phone, email: p.email, availableLanguage: ['English', 'Hindi'], areaServed: 'IN' })),
   ],
