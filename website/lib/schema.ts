@@ -27,7 +27,7 @@ const organization = (): Node => ({
   '@type': 'Organization',
   '@id': ORG,
   name: SITE_NAME,
-  alternateName: ['Aperture CM', 'Aperture AI Studio', 'aperturecm.in'],
+  alternateName: ['Aperture Studios', 'Aperture CM', 'Aperture AI Studio', 'aperturecm.in'],
   url: abs('/'),
   logo: { '@type': 'ImageObject', '@id': `${SITE_URL}/#logo`, url: abs('/img/aperture-lockup.png'), caption: 'Aperture' },
   image: abs('/opengraph-image'),
