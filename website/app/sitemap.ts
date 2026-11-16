@@ -14,6 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: abs('/studio'), lastModified: UPDATED },
     { url: abs('/contact'), lastModified: UPDATED },
     ...clients.map((c) => ({ url: abs(`/work/${c.slug}`), lastModified: UPDATED })),
-    ...landings.map((l) => ({ url: abs(`/services/${l.slug}`), lastModified: new Date('2026-11-09') })),
+    { url: abs('/project-data'), lastModified: new Date('2026-11-16') },
+    ...landings.map((l) => ({ url: abs(`/services/${l.slug}`), lastModified: new Date(l.slug === 'ai-automation-agency-gurugram' ? '2026-11-16' : '2026-11-09') })),
   ];
 }

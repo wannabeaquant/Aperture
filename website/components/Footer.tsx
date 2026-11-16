@@ -25,7 +25,7 @@ export default function Footer() {
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 20, marginTop: 72, paddingTop: 20, borderTop: '2px solid rgba(255,255,255,.2)' }}>
           <span className="brand"><span className="markimg" style={{ width: 24, height: 24 }} />Aperture</span>
-          <nav className="mono" style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}><Link href="/work">Work</Link><Link href="/services">Services</Link><Link href="/studio">Studio</Link><Link href="/contact">Contact</Link></nav>
+          <nav className="mono" style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}><Link href="/work">Work</Link><Link href="/services">Services</Link><Link href="/studio">Studio</Link><Link href="/contact">Contact</Link><Link href="/project-data">Project data</Link><Link href="/services/ai-automation-agency-gurugram">Gurugram</Link></nav>
           <span className="mono" style={{ opacity: 0.55 }}>aperturecm.in</span>
         </div>
         <p className="mono" style={{ marginTop: 16, opacity: 0.7, fontSize: 12 }}>APERTURE · {ADDRESS_LINE.toUpperCase()} · <a href="tel:+919990052074">+91 99900 52074</a> · <a href="tel:+919368322072">+91 93683 22072</a> · <a href={BOOKING_URL} target="_blank" rel="noreferrer">BOOK A CALL</a></p>
