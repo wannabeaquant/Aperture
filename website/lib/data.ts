@@ -140,8 +140,8 @@ export const founders = [
   { name: 'SANIDHYA SHISHODIA', email: 'shishodiasanidhya@gmail.com', phone: '919368322072', phoneShow: '+91 93683 22072' },
 ];
 
-/** Tools we actually build with (checked against our project code, 22 Nov 2026). Only add a tool once a real project uses it. */
-export const stack = ['n8n', 'Claude (Anthropic)', 'Groq', 'Pipecat (voice agents)', 'Supabase', 'FastAPI', 'Next.js', 'React Native and Expo', 'Playwright'];
+/** Tools we actually build with (project code, plus founder confirmation 22 Nov 2026 that the team uses all major AI tools). */
+export const stack = ['n8n', 'Claude (Anthropic)', 'OpenAI (ChatGPT)', 'Gemini', 'Groq', 'Pipecat (voice agents)', 'Supabase', 'FastAPI', 'Next.js', 'React Native and Expo', 'Playwright'];
 
 export const tape = ['AI AUTOMATION', 'VOICE AGENTS', 'OPERATING SOFTWARE', 'MULTI-AGENT SYSTEMS', 'WHATSAPP BOTS', 'WEB AND MOBILE APPS', 'INTEGRATIONS'];
 
