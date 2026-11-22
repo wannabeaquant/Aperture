@@ -253,7 +253,7 @@ export const landings: Landing[] = [
   {
     slug: 'bpo-crm-software',
     keyword: 'bpo crm software india',
-    title: 'BPO and Call Centre CRM Software, Built for Your Floor',
+    title: 'BPO and Call Centre CRM Software in India, Built for Your Floor',
     description: 'One operating system for BPOs and call centres: dialer, CRM, QA, incentives, workforce and client reporting, with regional-language AI calling. Built by Aperture.',
     h1: ['"BPO', 'SOFTWARE"'],
     lead: 'We build one operating system for calling teams in place of a stack of disconnected tools: campaign dialer, CRM and callbacks, workforce records, evidence-linked QA, incentives, a live floor view and client reporting, with regional-language AI calling that transfers to a person.',
