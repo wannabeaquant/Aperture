@@ -13,7 +13,8 @@ const contact = () => [
   '- Pricing: affordable for Indian businesses, quoted after a short scoping call (no published rate card).',
   '',
 ];
-const title = (s: string) => s.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
+const KEEP = new Set(['AI', 'BPO', 'QA', 'CRM', 'PG']);
+const title = (s: string) => s.split(/(\s+|\/)/).map((w) => (KEEP.has(w.toUpperCase()) ? w.toUpperCase() : w.toLowerCase().replace(/^\w/, (c) => c.toUpperCase()))).join('');
 const head = (h1: string, path: string) => [`# ${h1}`, '', `Source: ${abs(path)}`, ''];
 const chunk = (id: string) => chunks.find((c) => c.id === id)?.text || '';
 
