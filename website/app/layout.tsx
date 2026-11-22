@@ -16,7 +16,7 @@ const mono = IBM_Plex_Mono({ subsets: ['latin'], variable: '--font-mono', weight
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.aperturecm.in'),
-  title: { default: 'Aperture | AI Automation, Voice Agents and App Development Studio', template: '%s / Aperture' },
+  title: { default: 'Aperture | AI Automation and Voice Agent Studio in Gurugram, India', template: '%s / Aperture' },
   description: SITE_DESC,
   applicationName: 'Aperture',
   authors: [{ name: 'Atharva Singh' }, { name: 'Sanidhya Shishodia' }],
@@ -25,8 +25,8 @@ export const metadata: Metadata = {
   alternates: { canonical: '/' },
   verification: { other: { 'msvalidate.01': '58817702CB0E52770E2163C72BB90151' } },
   robots: { index: true, follow: true, googleBot: { index: true, follow: true, 'max-snippet': -1, 'max-image-preview': 'large', 'max-video-preview': -1 } },
-  openGraph: { type: 'website', siteName: 'Aperture', locale: 'en_IN', url: '/', title: 'Aperture | AI Automation, Voice Agents and App Development Studio', description: SITE_DESC },
-  twitter: { card: 'summary_large_image', title: 'Aperture | AI Automation, Voice Agents and App Development Studio', description: SITE_DESC },
+  openGraph: { type: 'website', siteName: 'Aperture', locale: 'en_IN', url: '/', title: 'Aperture | AI Automation and Voice Agent Studio in Gurugram, India', description: SITE_DESC },
+  twitter: { card: 'summary_large_image', title: 'Aperture | AI Automation and Voice Agent Studio in Gurugram, India', description: SITE_DESC },
   icons: {
     icon: [
       { url: '/icon-light.png', type: 'image/png', sizes: '256x256', media: '(prefers-color-scheme: light)' },

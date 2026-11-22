@@ -14,7 +14,7 @@ import Fit from '@/components/Fit';
 import { Lines, Rv } from '@/components/Reveal';
 import { clients, featured, services, steps } from '@/lib/data';
 
-export const metadata: Metadata = { title: { absolute: 'Aperture | AI Automation, Voice Agents and App Development Studio' }, description: SITE_DESC, alternates: { canonical: '/' } };
+export const metadata: Metadata = { title: { absolute: 'Aperture | AI Automation and Voice Agent Studio in Gurugram, India' }, description: SITE_DESC, alternates: { canonical: '/' } };
 
 const Head = ({ no, title, right }: { no: string; title: string; right?: string }) => (
   <div className="fig mono"><span>({no}) {title}</span><span>{right}</span></div>

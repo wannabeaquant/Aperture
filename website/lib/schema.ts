@@ -94,7 +94,7 @@ const wrap = (nodes: Node[]) => ({ '@context': 'https://schema.org', '@graph': n
 export const siteGraph = () => wrap([organization(), website(), ...people.map(person)]);
 
 export const homeGraph = () => wrap([
-  page('/', 'Aperture | AI Automation, Voice Agents and App Development Studio', SITE_DESC, 'WebPage', { breadcrumb: { '@id': `${abs('/')}#breadcrumb` } }),
+  page('/', 'Aperture | AI Automation and Voice Agent Studio in Gurugram, India', SITE_DESC, 'WebPage', { breadcrumb: { '@id': `${abs('/')}#breadcrumb` } }),
   { ...crumbs([['Home', '/']]), '@id': `${abs('/')}#breadcrumb` },
 ]);
 
