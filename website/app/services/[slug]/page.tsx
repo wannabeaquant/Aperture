@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const l = landings.find((x) => x.slug === slug);
   if (!l) return {};
   const url = `/services/${l.slug}`;
-  return { title: l.title, description: l.description, alternates: { canonical: url }, openGraph: { url, title: l.title, description: l.description, images: ['/opengraph-image'] }, twitter: { card: 'summary_large_image', images: ['/opengraph-image'] } };
+  return { title: l.title, description: l.description, alternates: { canonical: url, types: { 'text/markdown': `${url}.md` } }, openGraph: { url, title: l.title, description: l.description, images: ['/opengraph-image'] }, twitter: { card: 'summary_large_image', images: ['/opengraph-image'] } };
 }
 
 export default async function LandingPage({ params }: { params: Promise<{ slug: string }> }) {

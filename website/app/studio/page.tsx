@@ -10,7 +10,7 @@ import Fit from '@/components/Fit';
 import { Lines, Rv } from '@/components/Reveal';
 import { founders, steps } from '@/lib/data';
 
-export const metadata: Metadata = { title: 'About the Studio and Founders', description: 'Aperture is two founders, Atharva Singh and Sanidhya Shishodia, who both stay on the work from the first scope call to launch.', alternates: { canonical: '/studio' } };
+export const metadata: Metadata = { title: 'About the Studio and Founders', description: 'Aperture is two founders, Atharva Singh and Sanidhya Shishodia, who both stay on the work from the first scope call to launch.', alternates: { canonical: '/studio', types: { 'text/markdown': '/studio.md' } } };
 
 export default function Studio() {
   return (

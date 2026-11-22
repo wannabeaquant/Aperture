@@ -9,7 +9,7 @@ import { Rv } from '@/components/Reveal';
 import { founders } from '@/lib/data';
 import { starter, waLink } from '@/lib/contact';
 
-export const metadata: Metadata = { title: 'Contact Aperture: WhatsApp, Call or Quick Brief', description: 'Message or call the founders on WhatsApp, email them, or leave a quick brief. Both founders read everything that comes in.', alternates: { canonical: '/contact' } };
+export const metadata: Metadata = { title: 'Contact Aperture: WhatsApp, Call or Quick Brief', description: 'Message or call the founders on WhatsApp, email them, or leave a quick brief. Both founders read everything that comes in.', alternates: { canonical: '/contact', types: { 'text/markdown': '/contact.md' } } };
 
 export default function Contact() {
   const booking = process.env.NEXT_PUBLIC_BOOKING_URL;

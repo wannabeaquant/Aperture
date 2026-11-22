@@ -6,7 +6,7 @@ import JsonLd from '@/components/JsonLd';
 import { workGraph } from '@/lib/schema';
 import { clients, featured, rest } from '@/lib/data';
 
-export const metadata: Metadata = { title: 'Client Work: AI Systems, Websites and Apps', description: 'What Aperture has built for AI, finance, education, property, interiors and operations teams: AI products, voice agents, CRMs, websites and apps.', alternates: { canonical: '/work' } };
+export const metadata: Metadata = { title: 'Client Work: AI Systems, Websites and Apps', description: 'What Aperture has built for AI, finance, education, property, interiors and operations teams: AI products, voice agents, CRMs, websites and apps.', alternates: { canonical: '/work', types: { 'text/markdown': '/work.md' } } };
 
 export default function Work() {
   return (

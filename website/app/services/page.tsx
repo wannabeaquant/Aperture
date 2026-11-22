@@ -8,7 +8,7 @@ import Fit from '@/components/Fit';
 import { services } from '@/lib/data';
 import { landings } from '@/lib/landing';
 
-export const metadata: Metadata = { title: 'AI Automation, Voice Agent and Multi-Agent System Services in India', description: 'Voice agents, AI automation, multi-agent systems, chatbots, websites, web and mobile apps, CRM and integrations from one team in Gurugram, India.', alternates: { canonical: '/services' } };
+export const metadata: Metadata = { title: 'AI Automation, Voice Agent and Multi-Agent System Services in India', description: 'Voice agents, AI automation, multi-agent systems, chatbots, websites, web and mobile apps, CRM and integrations from one team in Gurugram, India.', alternates: { canonical: '/services', types: { 'text/markdown': '/services.md' } } };
 
 export default function Services() {
   return (
