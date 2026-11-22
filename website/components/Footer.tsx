@@ -3,7 +3,7 @@ import Arr from '@/components/Arr';
 import Fit from './Fit';
 import Tape from './Tape';
 import { founders, stack } from '@/lib/data';
-import { ADDRESS_LINE, BOOKING_URL } from '@/lib/site';
+import { ADDRESS_LINE, BOOKING_URL, CONTACT_EMAIL } from '@/lib/site';
 
 export default function Footer() {
   return (
@@ -28,7 +28,7 @@ export default function Footer() {
           <nav className="mono" style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}><Link href="/work">Work</Link><Link href="/services">Services</Link><Link href="/studio">Studio</Link><Link href="/contact">Contact</Link><Link href="/project-data">Project data</Link><Link href="/services/ai-automation-agency-gurugram">Gurugram</Link></nav>
           <span className="mono" style={{ opacity: 0.55 }}>aperturecm.in</span>
         </div>
-        <p className="mono" style={{ marginTop: 16, opacity: 0.7, fontSize: 12 }}>APERTURE · {ADDRESS_LINE.toUpperCase()} · <a href="tel:+919990052074">+91 99900 52074</a> · <a href="tel:+919368322072">+91 93683 22072</a> · <a href={BOOKING_URL} target="_blank" rel="noreferrer">BOOK A CALL</a></p>
+        <p className="mono" style={{ marginTop: 16, opacity: 0.7, fontSize: 12 }}>APERTURE · {ADDRESS_LINE.toUpperCase()} · <a href="tel:+919990052074">+91 99900 52074</a> · <a href="tel:+919368322072">+91 93683 22072</a> · <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL.toUpperCase()}</a> · <a href={BOOKING_URL} target="_blank" rel="noreferrer">BOOK A CALL</a></p>
         <p className="mono" style={{ marginTop: 12, opacity: 0.7, fontSize: 12 }}>TWO FOUNDERS · BUILT WITH {stack.join(' · ').toUpperCase()} · © {new Date().getFullYear()} APERTURE</p>
         <nav className="mono" aria-label="Buyer guides" style={{ display: 'flex', gap: '10px 24px', flexWrap: 'wrap', marginTop: 20, opacity: 0.7, fontSize: 12 }}>
           <span>GUIDES:</span>

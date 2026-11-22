@@ -11,6 +11,8 @@ export const SAME_AS: string[] = [];
 // Service-area business: no public street address (matches the Google Business Profile).
 export const ADDRESS = { city: 'Gurugram', region: 'Haryana', country: 'IN' };
 export const ADDRESS_LINE = `${ADDRESS.city}, ${ADDRESS.region}, India`;
+/** Business inbox on our own domain (Forward Email alias, confirmed working 22 Nov 2026). */
+export const CONTACT_EMAIL = 'info@aperturecm.in';
 export const BOOKING_URL = process.env.NEXT_PUBLIC_BOOKING_URL || 'https://calendly.com/aperture_inc/30min';
 
 export const abs = (p = '/') => `${SITE_URL}${p === '/' ? '' : p}`;

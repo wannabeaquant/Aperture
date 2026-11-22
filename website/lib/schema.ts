@@ -1,5 +1,5 @@
 import { clients, services } from './data';
-import { ADDRESS, SAME_AS, SITE_DESC, SITE_NAME, SITE_URL, abs, people } from './site';
+import { ADDRESS, CONTACT_EMAIL, SAME_AS, SITE_DESC, SITE_NAME, SITE_URL, abs, people } from './site';
 
 type Node = Record<string, unknown>;
 const ORG = `${SITE_URL}/#organization`;
@@ -33,7 +33,7 @@ const organization = (): Node => ({
   image: abs('/opengraph-image'),
   description: SITE_DESC,
   slogan: 'The thing behind the thing',
-  email: people[0].email,
+  email: CONTACT_EMAIL,
   telephone: people[0].phone,
   priceRange: '$$',
   address: { '@type': 'PostalAddress', addressLocality: ADDRESS.city, addressRegion: ADDRESS.region, addressCountry: ADDRESS.country },

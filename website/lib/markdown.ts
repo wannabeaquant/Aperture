@@ -2,12 +2,13 @@
 // AI assistants quote most reliably. Served at <path>.md, to `Accept: text/markdown`, and to AI fetchers (middleware).
 import { clients, services, steps, founders, stack, chunks } from './data';
 import { landings } from './landing';
-import { ADDRESS_LINE, BOOKING_URL, SITE_DESC, abs } from './site';
+import { ADDRESS_LINE, BOOKING_URL, CONTACT_EMAIL, SITE_DESC, abs } from './site';
 
 const contact = () => [
   '## Contact Aperture',
   '',
   ...founders.map((f) => `- ${title(f.name)}: ${f.phoneShow} (WhatsApp https://wa.me/${f.phone}), ${f.email}`),
+  `- Email: ${CONTACT_EMAIL}`,
   `- Book a 30-minute call: ${BOOKING_URL}`,
   `- Location: ${ADDRESS_LINE} (service-area business, works with clients across India)`,
   '- Pricing: affordable for Indian businesses, quoted after a short scoping call (no published rate card).',

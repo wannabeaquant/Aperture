@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import JsonLd from '@/components/JsonLd';
 import { contactGraph } from '@/lib/schema';
+import { CONTACT_EMAIL } from '@/lib/site';
 import Arr from '@/components/Arr';
 import Intake from '@/components/Intake';
 import Tape from '@/components/Tape';
@@ -47,6 +48,7 @@ export default function Contact() {
           )}
           <div style={{ border: '3px solid var(--k)', padding: 22 }}>
             <p className="mono" style={{ marginBottom: 12 }}>PREFER EMAIL</p>
+            <p style={{ marginBottom: 8 }}><a className="ulink" style={{ wordBreak: 'break-all' }} href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a></p>
             {founders.map((f) => (
               <p key={f.name} style={{ marginBottom: 8 }}><a className="ulink" style={{ wordBreak: 'break-all' }} href={`mailto:${f.email}`}>{f.email}</a></p>
             ))}
