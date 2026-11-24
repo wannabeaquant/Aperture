@@ -42,7 +42,7 @@ export default function ProjectData() {
     '@context': 'https://schema.org',
     '@graph': [
       page(PATH, TITLE, DESC),
-      { '@type': 'Dataset', '@id': `${abs(PATH)}#dataset`, name: 'Aperture projects by type', description: DESC, url: abs(PATH), creator: { '@id': `${abs('/')}/#organization` }, variableMeasured: 'Projects by type of system built' },
+      { '@type': 'Dataset', '@id': `${abs(PATH)}#dataset`, name: 'Aperture projects by type', description: DESC, url: abs(PATH), creator: { '@type': 'Organization', '@id': `${abs('/')}/#organization`, name: 'Aperture', url: abs('/') }, publisher: { '@type': 'Organization', name: 'Aperture', url: abs('/') }, isAccessibleForFree: true, spatialCoverage: { '@type': 'Place', name: 'India' }, inLanguage: 'en-IN', keywords: ['AI automation', 'AI agents', 'voice agents', 'software projects', 'India'], variableMeasured: 'Projects by type of system built' },
       { '@type': 'FAQPage', '@id': `${abs(PATH)}#faq`, mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
     ],
   };
