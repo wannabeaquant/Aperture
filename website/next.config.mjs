@@ -7,7 +7,7 @@ export default {
   outputFileTracingRoot: root,
   async redirects() {
     // Directory crawlers look for an about page by name.
-    return [{ source: '/about', destination: '/studio', permanent: true }, { source: '/about-us', destination: '/studio', permanent: true }];
+    return [{ source: '/about', destination: '/studio', permanent: true }, { source: '/about-us', destination: '/studio', permanent: true }, { source: '/process', destination: '/studio', permanent: true }];
   },
   async headers() {
     const rules = [{ source: '/api/:path*', headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }] }];
