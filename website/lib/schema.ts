@@ -1,4 +1,5 @@
 import { clients, services } from './data';
+import { depth } from './casedepth';
 import { ADDRESS, CONTACT_EMAIL, SAME_AS, SITE_DESC, SITE_NAME, SITE_URL, abs, people } from './site';
 
 type Node = Record<string, unknown>;
@@ -144,5 +145,6 @@ export const caseGraph = (slug: string) => {
       publisher: { '@id': ORG },
       url: abs(path),
     },
+    ...(depth[slug] ? [{ '@type': 'FAQPage', '@id': `${abs(path)}#faq`, mainEntity: depth[slug].faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) }] : []),
   ]);
 };

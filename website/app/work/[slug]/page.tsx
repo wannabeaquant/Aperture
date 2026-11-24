@@ -8,6 +8,7 @@ import Fit from '@/components/Fit';
 import { nameLines } from '@/lib/lines';
 import { Rv } from '@/components/Reveal';
 import { clients } from '@/lib/data';
+import { depth } from '@/lib/casedepth';
 import JsonLd from '@/components/JsonLd';
 import { caseGraph } from '@/lib/schema';
 
@@ -25,6 +26,7 @@ export default async function Client({ params }: { params: Promise<{ slug: strin
   if (i < 0) notFound();
   const c = clients[i];
   const next = clients[(i + 1) % clients.length];
+  const d = depth[c.slug];
   return (
     <>
       <JsonLd data={caseGraph(c.slug)} />
@@ -48,6 +50,28 @@ export default async function Client({ params }: { params: Promise<{ slug: strin
           {c.built.map((t, n) => (<li key={t}><span>0{n + 1}</span>{t}</li>))}
         </ol>
       </section>
+
+      {d && (
+        <>
+          <section className="lp">
+            <p className="mono">THE PROBLEM</p>
+            <p className="lp-time" style={{ marginTop: 0, fontSize: 18 }}>{d.challenge}</p>
+          </section>
+          <section className="lp">
+            <p className="mono">HOW IT WORKS</p>
+            <div className="lp-grid">{d.how.map((h, n) => (<div key={h.t}><span className="mono">0{n + 1}</span><h2>{h.t}</h2><p>{h.d}</p></div>))}</div>
+          </section>
+          <section className="lp">
+            <p className="mono">WHAT CHANGED</p>
+            <p className="lp-time" style={{ marginTop: 0, fontSize: 18 }}>{d.outcome}</p>
+            <p className="lp-time">Related services: {d.services.map((s, n) => (<span key={s.slug}>{n > 0 && ', '}<Link className="ulink" href={`/services/${s.slug}`}>{s.label}</Link></span>))}.</p>
+          </section>
+          <section className="lp">
+            <p className="mono">QUESTIONS</p>
+            <div className="lp-faq">{d.faqs.map((f) => (<details key={f.q}><summary>{f.q}</summary><p>{f.a}</p></details>))}</div>
+          </section>
+        </>
+      )}
 
       <section>
         <div className="fig mono"><span>NEXT CLIENT</span><span>{next.no} / {next.sector}</span></div>

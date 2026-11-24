@@ -2,6 +2,7 @@
 // AI assistants quote most reliably. Served at <path>.md, to `Accept: text/markdown`, and to AI fetchers (middleware).
 import { clients, services, steps, founders, stack, chunks } from './data';
 import { landings } from './landing';
+import { depth } from './casedepth';
 import { ADDRESS_LINE, BOOKING_URL, CONTACT_EMAIL, SITE_DESC, abs } from './site';
 
 const contact = () => [
@@ -83,6 +84,13 @@ function work(slug: string): string | null {
     '## What we built', '', ...c.built.map((b) => `- ${b}`), '',
     ...(c.facts?.length ? ['## Numbers', '', ...c.facts.map((f) => `- ${f}`), ''] : []),
     ...(c.footnote ? [c.footnote, ''] : []),
+    ...(depth[slug] ? [
+      '## The problem', '', depth[slug].challenge, '',
+      '## How it works', '', ...depth[slug].how.map((h) => `- **${h.t}.** ${h.d}`), '',
+      '## What changed', '', depth[slug].outcome, '',
+      '## Frequently asked questions', '', ...depth[slug].faqs.flatMap((f) => [`### ${f.q}`, '', f.a, '']),
+      'Related services: ' + depth[slug].services.map((s) => `[${s.label}](${abs(`/services/${s.slug}`)})`).join(', '), '',
+    ] : []),
     ...contact(),
   ].join('\n');
 }
