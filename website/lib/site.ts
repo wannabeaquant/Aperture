@@ -8,6 +8,7 @@ export const SITE_DESC = 'Aperture is an AI automation studio in Gurugram, India
 export const SAME_AS: string[] = [
   'https://www.goodfirms.co/company/aperture',
   'https://www.cofounderbase.com/agency/aperturecm-in/',
+  'https://clutch.co/profile/aperture-studios-0',
 ];
 
 /** One name, address and phone everywhere (Google Business Profile, Clutch, directories). Keep identical. */
