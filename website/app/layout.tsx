@@ -7,6 +7,7 @@ import Smooth from '@/components/Smooth';
 import Cursor from '@/components/Cursor';
 import Palette from '@/components/Palette';
 import Concierge from '@/components/Concierge';
+import Attribution from '@/components/Attribution';
 import JsonLd from '@/components/JsonLd';
 import { siteGraph } from '@/lib/schema';
 import { SITE_DESC } from '@/lib/site';
@@ -48,6 +49,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Footer />
         <Palette />
         <Concierge />
+        <Attribution />
       </body>
     </html>
   );

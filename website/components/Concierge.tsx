@@ -4,6 +4,7 @@ import Arr from '@/components/Arr';
 import { founders } from '@/lib/data';
 import { starter, waLink, normalisePhone, isEmail } from '@/lib/contact';
 import { BOOKING_URL } from '@/lib/site';
+import { firstTouch } from '@/lib/attrib';
 
 const WANTS_HUMAN = /price|pricing|cost|quote|budget|hire|talk|call me|whatsapp|contact|human|person|speak|reach|meet|book|demo|interested|start|proposal/i;
 
@@ -66,7 +67,7 @@ export default function Concierge() {
           name: lead.name, contact: c, website: lead.website,
           need: said.join(' / ').slice(0, 600), summary: (said[0] || 'Chat enquiry').slice(0, 240),
           note: `Chat: ${transcript}`.slice(0, 1800), page: typeof window !== 'undefined' ? (window.location.pathname + window.location.search).slice(0, 120) : '',
-          askedHuman: true,
+          askedHuman: true, kind: 'chat_lead', src: firstTouch(),
         }),
       });
       const d = await r.json().catch(() => ({}));

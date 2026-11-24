@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Arr from '@/components/Arr';
 import { founders } from '@/lib/data';
 import { waLink } from '@/lib/contact';
+import { firstTouch } from '@/lib/attrib';
 
 const quick = ['Voice agents', 'AI automation', 'Chat or WhatsApp bot', 'CRM or internal tool', 'Website or app', 'Not sure yet'];
 type Assist = { summary: string; services: string[]; question: string };
@@ -44,7 +45,7 @@ export default function Intake() {
     try {
       const r = await fetch('/api/lead', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, contact, need, summary: assist?.summary, services: assist?.services, note: extra, website: hp, page: location.pathname }),
+        body: JSON.stringify({ name, contact, need, summary: assist?.summary, services: assist?.services, note: extra, website: hp, page: location.pathname, kind: 'form_lead', src: firstTouch() }),
       });
       const d = await r.json().catch(() => ({}));
       if (r.status === 400 && d.reason === 'contact') { setErr('Add a WhatsApp number or an email so we can reply.'); setBusy(false); return; }

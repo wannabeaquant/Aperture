@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { isEmail, normalisePhone } from '@/lib/contact';
+import { logLead, sourceLine } from '@/lib/leadlog';
 
 export const runtime = 'nodejs';
 
@@ -64,6 +65,8 @@ export async function POST(req: NextRequest) {
   const note = clean(b.note, 1800);
   const page = clean(b.page, 120);
   const askedHuman = Boolean(b.askedHuman);
+  const src = clean(b.src, 300);
+  const kind = clean(b.kind, 20);
 
   const wa = phone ? `https://wa.me/${phone}` : null;
   const text = [
@@ -75,9 +78,11 @@ export async function POST(req: NextRequest) {
     services.length ? `Services: ${services.join(', ')}` : '',
     note && `Extra: ${note}`,
     page && `Page: ${page}`,
+    sourceLine(src),
   ].filter(Boolean).join('\n');
 
   const delivered = await notify(text, wa);
+  await logLead({ kind: kind === 'form_lead' ? 'form_lead' : 'chat_lead', page, src, services: services.join(', '), askedHuman, delivered });
   if (!delivered) return NextResponse.json({ ok: false, reason: 'not_delivered' }, { status: 202 });
   return NextResponse.json({ ok: true, delivered });
 }
