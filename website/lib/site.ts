@@ -5,7 +5,10 @@ export const SITE_NAME = 'Aperture';
 export const SITE_DESC = 'Aperture is an AI automation studio in Gurugram, India. We build voice agents, AI agents, multi-agent systems, websites and apps. Automations ship in 2-3 days, websites in 4-5.';
 
 /** Profiles we have confirmed ownership of. Add LinkedIn, GitHub, X, Clutch and the like here once they exist, and they flow into the schema automatically. */
-export const SAME_AS: string[] = [];
+export const SAME_AS: string[] = [
+  'https://www.goodfirms.co/company/aperture',
+  'https://www.cofounderbase.com/agency/aperturecm-in/',
+];
 
 /** One name, address and phone everywhere (Google Business Profile, Clutch, directories). Keep identical. */
 // Service-area business: no public street address (matches the Google Business Profile).
