@@ -29,7 +29,7 @@ export default function Footer() {
           <span className="mono" style={{ opacity: 0.55 }}>aperturecm.in</span>
         </div>
         <p className="mono" style={{ marginTop: 16, opacity: 0.7, fontSize: 12 }}>APERTURE · {ADDRESS_LINE.toUpperCase()} · <a href="tel:+919990052074">+91 99900 52074</a> · <a href="tel:+919368322072">+91 93683 22072</a> · <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL.toUpperCase()}</a> · <a href={BOOKING_URL} target="_blank" rel="noreferrer">BOOK A CALL</a></p>
-        <p className="mono" style={{ marginTop: 12, opacity: 0.7, fontSize: 12 }}>TWO FOUNDERS · BUILT WITH {stack.join(' · ').toUpperCase()} · © {new Date().getFullYear()} APERTURE</p>
+        <p className="mono" style={{ marginTop: 12, opacity: 0.7, fontSize: 12 }}>FOUNDED 2025 BY ATHARVA SINGH AND SANIDHYA SHISHODIA · TEAM OF 2 · BUILT WITH {stack.join(' · ').toUpperCase()} · © {new Date().getFullYear()} APERTURE</p>
         <nav className="mono" aria-label="Buyer guides" style={{ display: 'flex', gap: '10px 24px', flexWrap: 'wrap', marginTop: 20, opacity: 0.7, fontSize: 12 }}>
           <span>GUIDES:</span>
           <a href="https://apertureautomates.com">Best AI automation agencies in India</a>

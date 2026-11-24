@@ -5,6 +5,10 @@ const root = path.dirname(fileURLToPath(import.meta.url));
 export default {
   reactStrictMode: true,
   outputFileTracingRoot: root,
+  async redirects() {
+    // Directory crawlers look for an about page by name.
+    return [{ source: '/about', destination: '/studio', permanent: true }, { source: '/about-us', destination: '/studio', permanent: true }];
+  },
   async headers() {
     const rules = [{ source: '/api/:path*', headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }] }];
     // Preview and branch deployments must never be indexed.

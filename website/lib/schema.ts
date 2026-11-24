@@ -41,6 +41,8 @@ const organization = (): Node => ({
     ...people.map((p) => ({ '@type': 'ContactPoint', contactType: 'sales', name: p.name, telephone: p.phone, email: p.email, availableLanguage: ['English', 'Hindi'], areaServed: 'IN' })),
   ],
   founder: people.map((p) => ({ '@id': p.id })),
+  foundingDate: '2025',
+  numberOfEmployees: { '@type': 'QuantitativeValue', value: 2 },
   areaServed: { '@type': 'Country', name: 'India' },
   knowsAbout: topics,
   makesOffer: services.map((s) => ({ '@type': 'Offer', itemOffered: { '@id': serviceId(s.n) } })),
