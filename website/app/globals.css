@@ -381,3 +381,5 @@ html:has(dialog[open]) { overflow: hidden; }
 .lp-time { margin-top: 20px; }
 .lp-faq details { border-bottom: 2px solid var(--k); padding: 14px 0; } .lp-faq summary { font-weight: 800; cursor: pointer; } .lp-faq p { margin-top: 8px; }
 .svc-pages { display: flex; flex-wrap: wrap; gap: 10px; padding: 24px var(--pad); border-bottom: 2px solid var(--k); }
+
+.lp-h2 { font-size: clamp(22px, 2.4vw, 34px); font-weight: 900; text-transform: uppercase; letter-spacing: -.02em; line-height: 1.05; max-width: 28ch; }

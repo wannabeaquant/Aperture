@@ -2,6 +2,7 @@
 // AI assistants quote most reliably. Served at <path>.md, to `Accept: text/markdown`, and to AI fetchers (middleware).
 import { clients, services, steps, founders, stack, chunks } from './data';
 import { landings } from './landing';
+import { landingDepth } from './landing-depth';
 import { depth } from './casedepth';
 import { ADDRESS_LINE, BOOKING_URL, CONTACT_EMAIL, SITE_DESC, abs } from './site';
 
@@ -58,9 +59,10 @@ function landing(slug: string): string | null {
     l.lead, '',
     '## What we build', '', ...l.build.map((b) => `- ${b}`), '',
     '## How we work', '', ...l.how.map((h) => `- **${h.t}.** ${h.d}`), '',
+    ...(landingDepth[l.slug]?.sections || []).flatMap((sec) => [`## ${sec.h}`, '', ...sec.p.flatMap((x) => [x, ''])]),
     '## Related work', '', ...l.work.map((w) => `- [${w.name}](${abs(`/work/${w.slug}`)}): ${w.why}`), '',
     '## Timeline', '', l.timeline, '',
-    '## Frequently asked questions', '', ...l.faqs.flatMap((f) => [`### ${f.q}`, '', f.a, '']),
+    '## Frequently asked questions', '', ...[...l.faqs, ...(landingDepth[l.slug]?.faqs || [])].flatMap((f) => [`### ${f.q}`, '', f.a, '']),
     ...(l.guide ? [`Related guide: [${l.guide.label}](${l.guide.href})`, ''] : []),
     ...contact(),
   ].join('\n');
